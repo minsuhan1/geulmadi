@@ -1,0 +1,43 @@
+// index.html hero
+.hero {
+  margin-top: 50px;
+  align-items: center;
+
+  &__cards__container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+  }
+
+  &__card {
+    width: 38rem;
+    height: 45rem;
+    background-color: rgb(192, 192, 192);
+    border-radius: 1.5%;
+    box-shadow: 0px 15px 30px -15px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.heading__primary {
+  font-size: 5rem;
+}
+
+.heading__primary__sub {
+  font-size: 3.5rem;
+}
+
+.heading__description {
+  margin-top: 5px;
+}
+
+.link__goto__collection__page {
+  text-align: center;
+  font-size: 2rem;
+  margin: 20px auto;
+}
+
+.link__goto__collection__page a {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  color: inherit;
+}

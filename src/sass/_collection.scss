@@ -1,0 +1,169 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic);
+
+// Popular tags, authors
+.popular__container {
+  display: flex;
+  flex-direction: column;
+  padding-right: 5rem;
+}
+
+.label__popular__authors,
+.label__popular__tags {
+  font-size: 2rem;
+  padding: 5px 0;
+  margin-bottom: 7px;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.popular__tags__container,
+.popular__authors__container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10rem;
+}
+
+.popular__tag,
+.popular__author {
+  padding: 4px 10px;
+  margin: 3px 2px;
+  background-color: #ede6d6;
+  border-radius: 100px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ddd6c7;
+  }
+  &:active {
+    background-color: #c2bcb0;
+  }
+}
+
+// search bar
+.search__container {
+  margin-top: 50px;
+  height: 3rem;
+  display: flex;
+  justify-content: end;
+  padding: 10px 0;
+}
+
+.search__input {
+  width: 65rem;
+  margin-right: 5px;
+  padding-left: 5px;
+
+  background: #ffffff;
+  border-radius: 3px;
+  border: #dcd6cc 1px solid;
+  color: #333333;
+  resize: none;
+  &:focus {
+    box-shadow: 0 0 4px rgb(185 173 153 / 50%);
+    border-color: #b9ad99;
+    outline: 0px;
+  }
+}
+
+.search__button {
+  background-color: #f4f1ea;
+  border: 1px solid #d6d0c4;
+  border-radius: 3px;
+  padding: 2px 4px;
+  cursor: pointer;
+
+  &:hover {
+    color: #333333;
+    background-color: #ede6d6;
+  }
+
+  &:active {
+    background-color: #d6d0c4;
+  }
+}
+
+.collection__section {
+  display: flex;
+}
+
+.popular__container {
+  flex-basis: 70rem;
+}
+
+.collection__container {
+  flex-grow: 1;
+}
+
+// 글마디 리스트 element
+.blockquote__list__child {
+  display: flex;
+  padding: 10px 0 10px 10px;
+
+  &__like__area {
+    align-items: center;
+    text-align: center;
+    margin: auto 15px;
+  }
+}
+
+.blockquote__like__num {
+  font-size: 1.2rem;
+  color: #c4c4c4;
+  font-weight: 600;
+
+  &.favorite {
+    color: #ff0000;
+  }
+}
+
+blockquote {
+  flex-grow: 1;
+  font-size: 1.4em;
+  font-family: Open Sans;
+  font-style: italic;
+  // white-space: pre-line;
+  color: #555555;
+  padding: 1.2em 30px 1.2em 75px;
+  line-height: 1.6;
+  position: relative;
+  background: #ededed;
+
+  span {
+    display: block;
+    color: #333333;
+    font-style: normal;
+    font-weight: bold;
+    margin-top: 1em;
+  }
+
+  &::before {
+    font-family: Arial;
+    content: "\201C";
+    font-size: 4em;
+    position: absolute;
+    left: 10px;
+    top: -10px;
+  }
+  &::after {
+    content: "";
+  }
+
+  &:hover {
+    transform: scale(1.007);
+    transition: all 0.2s linear;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
+  }
+
+  &.blockquote__phrase {
+    border-left: 8px solid #78c0a8;
+    &::before {
+      color: #78c0a8;
+    }
+  }
+
+  &.blockquote__lyric {
+    border-left: 8px solid #e69c9c;
+    &::before {
+      color: #e69c9c;
+    }
+  }
+}
