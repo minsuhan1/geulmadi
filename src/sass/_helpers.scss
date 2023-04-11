@@ -24,3 +24,17 @@
   line-height: 0px;
   margin: 0px 16px;
 }
+
+.fadein {
+  animation: fadein 0.5s;
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}

@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet">
     <link rel="stylesheet" href="src/sass/main.scss" />
-    <script src="src/js/main.js"></script>
+    <script type="module" src="src/js/controller.js"></script>
     <title>글마디 &ndash; 모아보기</title>
   </head>
   <body>
@@ -18,7 +18,7 @@
           <ul class="nav__list">
             <li class="nav__item">
               <button class="nav__btn"><span>글마디 작성</span></button>
-              <button class="nav__btn"><span>로그인</span></button>
+              <button class="nav__btn nav__btn__login"><span>로그인</span></button>
             </li>
           </ul>
         </nav>
@@ -138,10 +138,61 @@
         </div>
       </section>
 
-      <button href='#' class='add__btn__floating'><div class="material-icons">
+      <button href='#' class='add__btn__floating'>
+        <div class="material-icons">
         add
-        </div></button> 
+        </div>
+      </button> 
+      
+      <div id="login_modal" class="modal__container login_modal hidden">
+        <form class="form__modal login">
+          <span class="modal__close__btn">&times;</span>
+          <div class="form__title">로그인</div>
+          <div class="form__container">
+            <div class="form__sub__container">
+              <label class="label">이메일</label>
+              <input type="text" placeholder="이메일 주소를 입력하세요" class="input__email" required>
+            </div>
+            
+            <div class="form__sub__container">
+              <label class="label">비밀번호</label>
+              <input type="password" placeholder="비밀번호를 입력하세요" class="input__psw" required>              
+            </div>
+  
+            <button class="submit_btn submit__login" type="submit">로그인</button>
+          </div>
+      
+          <div class="form__footer">
+            <div class="form__footer__item btn__goto__find__psw">비밀번호 찾기</div>
+            <div class="form__footer__item btn__goto__register">회원 가입하기</div>
+          </div>
+        </form>
+      </div>
         
-    </div>
+      <div id="register_modal" class="modal__container register_modal hidden">
+        <form class="form__modal register">
+          <span class="modal__close__btn">&times;</span>
+          <div class="form__title">회원가입</div>
+          <div class="form__container">
+            
+            <div class="form__sub__container">
+              <label class="label">이메일</label>
+              <input type="text" placeholder="이메일 주소를 입력하세요" class="input__email" required>
+            </div>
+              
+            <div class="form__sub__container">
+              <label class="label">비밀번호</label>
+              <input type="password" placeholder="비밀번호를 입력하세요" class="input__psw" required>      
+            </div>
+
+            <div class="form__sub__container">
+              <label class="label"><b>비밀번호 확인</b></label>
+              <input type="password" placeholder="비밀번호를 한번 더 입력하세요" class="input__psw__check" required>
+            </div>
+            
+            <button class="submit_btn submit__register" type="submit">회원가입</button>
+          </div>
+        </form>
+      </div>
   </body>
 </html>

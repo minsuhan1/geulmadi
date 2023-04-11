@@ -96,6 +96,18 @@ html {
   margin: 0px 16px;
 }
 
+.fadein {
+  animation: fadein 0.5s;
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .popular__container {
   display: flex;
   flex-direction: column;
@@ -271,7 +283,7 @@ blockquote.blockquote__lyric::before {
   position: fixed;
   right: 30px;
   bottom: 20px;
-  z-index: 999;
+  z-index: 10;
   color: #fff;
   padding: 0;
   cursor: pointer;
@@ -298,6 +310,88 @@ blockquote.blockquote__lyric::before {
   font-size: 2.4rem;
   padding: 0;
   margin: 0.22rem 0 0 0;
+}
+
+/* 로그인, 회원가입 모달 */
+.modal__container {
+  position: fixed; /* Stay in place */
+  z-index: 11; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* 배경색 */
+  backdrop-filter: blur(5px); /* 배경 블러효과 */
+  padding-top: 60px;
+}
+.modal__container.hidden {
+  display: none;
+}
+
+.form__modal {
+  display: flex;
+  flex-direction: column;
+  background-color: #fefefe;
+  margin: 0px auto;
+  border: 1px solid #888;
+  width: 20%;
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.form__title {
+  text-align: center;
+  font-size: 5rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.form__container {
+  display: grid;
+  gap: 15px;
+}
+
+.form__sub__container {
+  display: flex;
+  flex-direction: column;
+}
+.form__sub__container input {
+  margin-top: 5px;
+  height: 3rem;
+  padding-left: 5px;
+}
+
+.submit_btn {
+  margin-top: 10px;
+  height: 4rem;
+}
+
+.form__footer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+.form__footer__item {
+  margin: 3px 10px;
+  cursor: pointer;
+  text-decoration-line: underline;
+  text-underline-offset: 3px;
+}
+
+.modal__close__btn {
+  /* Position it in the top right corner outside of the modal */
+  position: absolute;
+  right: 15px;
+  top: 0;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.modal__close__btn:hover {
+  color: rgb(0, 0, 0);
 }
 
 /*# sourceMappingURL=/main.2026268b.css.map */
