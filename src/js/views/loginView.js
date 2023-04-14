@@ -61,7 +61,10 @@ class LoginView extends View {
     });
   }
 
+  /* 로그인 창 닫기 */
   closeModal() {
+    // 모든 input value 제거
+    this.#form.reset();
     this.#toggleModal();
   }
 
@@ -77,6 +80,11 @@ class LoginView extends View {
   clearHeaderButtons() {
     this.#btnLogin.classList.add('hidden');
     this.#btnLogout.classList.add('hidden');
+  }
+
+  // @override
+  toggleButtonSpinner() {
+    document.querySelector('.submit__login').classList.toggle('spinner');
   }
 }
 

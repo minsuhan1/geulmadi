@@ -1,0 +1,91 @@
+/* 로그인, 회원가입 모달 */
+.modal__container {
+  // display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 11; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* 배경색 */
+  backdrop-filter: blur(5px); /* 배경 블러효과 */
+  padding-top: 60px;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.form__modal {
+  display: flex;
+  flex-direction: column;
+  background-color: #fefefe;
+  margin: 0px auto;
+  border: 1px solid #888;
+  width: 20%;
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.form__title {
+  text-align: center;
+  font-size: 5rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.form__container {
+  display: grid;
+  gap: 15px;
+}
+
+.form__sub__container {
+  display: flex;
+  flex-direction: column;
+  input {
+    margin-top: 5px;
+    height: 3rem;
+    padding-left: 5px;
+  }
+}
+
+.submit_btn {
+  position: relative;
+  margin-top: 10px;
+  height: 4rem;
+}
+
+.spinner .btn__text {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.form__footer {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+
+  &__item {
+    margin: 3px 10px;
+    cursor: pointer;
+    text-decoration-line: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.modal__close__btn {
+  /* Position it in the top right corner outside of the modal */
+  position: absolute;
+  right: 15px;
+  top: 0;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(0, 0, 0, 1);
+  }
+}

@@ -68,7 +68,14 @@ class RegisterView extends View {
 
   /* 회원가입 창 닫기 */
   closeModal() {
+    // 모든 input value 제거
+    this.#form.reset();
     this.#toggleModal();
+  }
+
+  // @override
+  toggleButtonSpinner() {
+    document.querySelector('.submit__register').classList.toggle('spinner');
   }
 }
 

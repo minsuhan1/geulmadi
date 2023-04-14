@@ -16,10 +16,20 @@ if (module.hot) {
  */
 const controlCreateAccount = async function (formData) {
   try {
+    // 로딩 스피너 표시
+    registerView.toggleButtonSpinner();
+    // Firebase 회원가입 인증 대기
     const data = await auth.signUpEmail(formData[0], formData[1]);
+    // 인증 완료 메시지 표시
     registerView.renderSuccessMessage("회원가입이 완료되었습니다.");
+    // 로딩 스피너 제거
+    registerView.toggleButtonSpinner();
+    // 회원가입 창 닫기
     registerView.closeModal();
   } catch (err) {
+    // 로딩 스피너 제거
+    registerView.toggleButtonSpinner();
+    // 오류 코드에 따른 메시지 표시
     switch (err.code) {
       case "auth/email-already-in-use":
         registerView.renderError("이미 사용 중인 이메일입니다.");
@@ -50,10 +60,20 @@ const controlCreateAccount = async function (formData) {
  */
 const controlSignIn = async function (formData) {
   try {
+    // 로딩 스피너 표시
+    loginView.toggleButtonSpinner();
+    // Firebase 로그인 인증 대기
     const data = await auth.signInEmail(formData[0], formData[1]);
+    // 인증 완료 메시지 표시
     loginView.renderSuccessMessage("로그인 성공");
+    // 로딩 스피너 제거
+    loginView.toggleButtonSpinner();
+    // 로그인 창 닫기
     loginView.closeModal();
   } catch (err) {
+    // 로딩 스피너 제거
+    loginView.toggleButtonSpinner();
+    // 오류코드에 따른 메시지 표시
     switch (err.code) {
       case "auth/user-not-found" || "auth/wrong-password":
         loginView.renderError("이메일 혹은 비밀번호가 일치하지 않습니다.");

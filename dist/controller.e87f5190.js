@@ -4166,13 +4166,15 @@ var View = /*#__PURE__*/function () {
   }
   _createClass(View, [{
     key: "renderError",
-    value: function renderError(message) {
+    value: /* 오류 메시지 표시 */
+    function renderError(message) {
       _sweetalert.default.fire({
         title: '오류',
         text: message,
         icon: 'error'
       });
     }
+    /* 성공 메시지 표시 */
   }, {
     key: "renderSuccessMessage",
     value: function renderSuccessMessage(message) {
@@ -4183,6 +4185,11 @@ var View = /*#__PURE__*/function () {
         timer: 2000
       });
     }
+
+    /* 버튼 로딩 스피너 표시 및 제거 */
+  }, {
+    key: "toggleButtonSpinner",
+    value: function toggleButtonSpinner() {}
   }]);
   return View;
 }();
@@ -4303,9 +4310,13 @@ var LoginView = /*#__PURE__*/function (_View) {
         handler(formData);
       });
     }
+
+    /* 로그인 창 닫기 */
   }, {
     key: "closeModal",
     value: function closeModal() {
+      // 모든 input value 제거
+      _classPrivateFieldGet(this, _form).reset();
       _classPrivateMethodGet(this, _toggleModal, _toggleModal2).call(this);
     }
 
@@ -4327,6 +4338,13 @@ var LoginView = /*#__PURE__*/function (_View) {
     value: function clearHeaderButtons() {
       _classPrivateFieldGet(this, _btnLogin).classList.add('hidden');
       _classPrivateFieldGet(this, _btnLogout).classList.add('hidden');
+    }
+
+    // @override
+  }, {
+    key: "toggleButtonSpinner",
+    value: function toggleButtonSpinner() {
+      document.querySelector('.submit__login').classList.toggle('spinner');
     }
   }]);
   return LoginView;
@@ -4458,7 +4476,16 @@ var RegisterView = /*#__PURE__*/function (_View) {
   }, {
     key: "closeModal",
     value: function closeModal() {
+      // 모든 input value 제거
+      _classPrivateFieldGet(this, _form).reset();
       _classPrivateMethodGet(this, _toggleModal, _toggleModal2).call(this);
+    }
+
+    // @override
+  }, {
+    key: "toggleButtonSpinner",
+    value: function toggleButtonSpinner() {
+      document.querySelector('.submit__register').classList.toggle('spinner');
     }
   }]);
   return RegisterView;
@@ -19669,42 +19696,52 @@ var controlCreateAccount = /*#__PURE__*/function () {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
-          _context.next = 3;
+          // 로딩 스피너 표시
+          _registerView.default.toggleButtonSpinner();
+          // Firebase 회원가입 인증 대기
+          _context.next = 4;
           return _auth.default.signUpEmail(formData[0], formData[1]);
-        case 3:
+        case 4:
           data = _context.sent;
+          // 인증 완료 메시지 표시
           _registerView.default.renderSuccessMessage("회원가입이 완료되었습니다.");
+          // 로딩 스피너 제거
+          _registerView.default.toggleButtonSpinner();
+          // 회원가입 창 닫기
           _registerView.default.closeModal();
-          _context.next = 24;
+          _context.next = 27;
           break;
-        case 8:
-          _context.prev = 8;
+        case 10:
+          _context.prev = 10;
           _context.t0 = _context["catch"](0);
+          // 로딩 스피너 제거
+          _registerView.default.toggleButtonSpinner();
+          // 오류 코드에 따른 메시지 표시
           _context.t1 = _context.t0.code;
-          _context.next = _context.t1 === "auth/email-already-in-use" ? 13 : _context.t1 === "auth/weak-password" ? 15 : _context.t1 === "auth/network-request-failed" ? 17 : _context.t1 === "auth/invalid-email" ? 19 : _context.t1 === "auth/internal-error" ? 21 : 23;
+          _context.next = _context.t1 === "auth/email-already-in-use" ? 16 : _context.t1 === "auth/weak-password" ? 18 : _context.t1 === "auth/network-request-failed" ? 20 : _context.t1 === "auth/invalid-email" ? 22 : _context.t1 === "auth/internal-error" ? 24 : 26;
           break;
-        case 13:
+        case 16:
           _registerView.default.renderError("이미 사용 중인 이메일입니다.");
           return _context.abrupt("return");
-        case 15:
+        case 18:
           _registerView.default.renderError("비밀번호는 6글자 이상이어야 합니다.");
           return _context.abrupt("return");
-        case 17:
+        case 20:
           _registerView.default.renderError("네트워크 연결에 실패하였습니다.");
           return _context.abrupt("return");
-        case 19:
+        case 22:
           _registerView.default.renderError("잘못된 이메일 형식입니다.");
           return _context.abrupt("return");
-        case 21:
+        case 24:
           _registerView.default.renderError("잘못된 요청입니다.");
           return _context.abrupt("return");
-        case 23:
+        case 26:
           _registerView.default.renderError("회원가입에 실패 하였습니다.");
-        case 24:
+        case 27:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 8]]);
+    }, _callee, null, [[0, 10]]);
   }));
   return function controlCreateAccount(_x) {
     return _ref.apply(this, arguments);
@@ -19724,42 +19761,52 @@ var controlSignIn = /*#__PURE__*/function () {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
-          _context2.next = 3;
+          // 로딩 스피너 표시
+          _loginView.default.toggleButtonSpinner();
+          // Firebase 로그인 인증 대기
+          _context2.next = 4;
           return _auth.default.signInEmail(formData[0], formData[1]);
-        case 3:
+        case 4:
           data = _context2.sent;
+          // 인증 완료 메시지 표시
           _loginView.default.renderSuccessMessage("로그인 성공");
+          // 로딩 스피너 제거
+          _loginView.default.toggleButtonSpinner();
+          // 로그인 창 닫기
           _loginView.default.closeModal();
-          _context2.next = 24;
+          _context2.next = 27;
           break;
-        case 8:
-          _context2.prev = 8;
+        case 10:
+          _context2.prev = 10;
           _context2.t0 = _context2["catch"](0);
+          // 로딩 스피너 제거
+          _loginView.default.toggleButtonSpinner();
+          // 오류코드에 따른 메시지 표시
           _context2.t1 = _context2.t0.code;
-          _context2.next = _context2.t1 === ("auth/user-not-found" || "auth/wrong-password") ? 13 : _context2.t1 === "auth/weak-password" ? 15 : _context2.t1 === "auth/network-request-failed" ? 17 : _context2.t1 === "auth/invalid-email" ? 19 : _context2.t1 === "auth/internal-error" ? 21 : 23;
+          _context2.next = _context2.t1 === ("auth/user-not-found" || "auth/wrong-password") ? 16 : _context2.t1 === "auth/weak-password" ? 18 : _context2.t1 === "auth/network-request-failed" ? 20 : _context2.t1 === "auth/invalid-email" ? 22 : _context2.t1 === "auth/internal-error" ? 24 : 26;
           break;
-        case 13:
+        case 16:
           _loginView.default.renderError("이메일 혹은 비밀번호가 일치하지 않습니다.");
           return _context2.abrupt("return");
-        case 15:
+        case 18:
           _loginView.default.renderError("비밀번호는 6글자 이상이어야 합니다.");
           return _context2.abrupt("return");
-        case 17:
+        case 20:
           _loginView.default.renderError("네트워크 연결에 실패하였습니다.");
           return _context2.abrupt("return");
-        case 19:
+        case 22:
           _loginView.default.renderError("잘못된 이메일 형식입니다.");
           return _context2.abrupt("return");
-        case 21:
+        case 24:
           _loginView.default.renderError("잘못된 요청입니다.");
           return _context2.abrupt("return");
-        case 23:
+        case 26:
           _loginView.default.renderError("로그인에 실패하였습니다.");
-        case 24:
+        case 27:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 8]]);
+    }, _callee2, null, [[0, 10]]);
   }));
   return function controlSignIn(_x2) {
     return _ref2.apply(this, arguments);
