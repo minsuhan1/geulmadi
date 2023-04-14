@@ -119,6 +119,7 @@ const controlUserStateChange = function (user) {
   loginView.clearHeaderButtons();
   if (user) {
     loginView.showNavLogOutButton();
+    loginView.showNavAccountButton(auth.getCurrentUserData().email);
   } else {
     loginView.showNavLoginButton();
   }

@@ -4231,6 +4231,7 @@ function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { 
 function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
 var _btnLogin = /*#__PURE__*/new WeakMap();
 var _btnLogout = /*#__PURE__*/new WeakMap();
+var _btnAccount = /*#__PURE__*/new WeakMap();
 var _modal = /*#__PURE__*/new WeakMap();
 var _form = /*#__PURE__*/new WeakMap();
 var _btnModalClose = /*#__PURE__*/new WeakMap();
@@ -4258,6 +4259,10 @@ var LoginView = /*#__PURE__*/function (_View) {
     _classPrivateFieldInitSpec(_assertThisInitialized(_this), _btnLogout, {
       writable: true,
       value: document.querySelector('.nav__btn__logout')
+    });
+    _classPrivateFieldInitSpec(_assertThisInitialized(_this), _btnAccount, {
+      writable: true,
+      value: document.querySelector('.nav__btn__account')
     });
     _classPrivateFieldInitSpec(_assertThisInitialized(_this), _modal, {
       writable: true,
@@ -4332,12 +4337,20 @@ var LoginView = /*#__PURE__*/function (_View) {
     value: function showNavLogOutButton() {
       _classPrivateFieldGet(this, _btnLogout).classList.remove('hidden');
     }
+    /* nav 프로필 버튼 보이기 */
+  }, {
+    key: "showNavAccountButton",
+    value: function showNavAccountButton(tooltipText) {
+      _classPrivateFieldGet(this, _btnAccount).classList.remove('hidden');
+      document.querySelector('.account__text').textContent = "".concat(tooltipText);
+    }
     /* nav 로그인/로그아웃 버튼 모두 제거 (초기화용) */
   }, {
     key: "clearHeaderButtons",
     value: function clearHeaderButtons() {
       _classPrivateFieldGet(this, _btnLogin).classList.add('hidden');
       _classPrivateFieldGet(this, _btnLogout).classList.add('hidden');
+      _classPrivateFieldGet(this, _btnAccount).classList.add('hidden');
     }
 
     // @override
@@ -19663,6 +19676,11 @@ var Auth = /*#__PURE__*/function () {
         handler(user);
       });
     }
+  }, {
+    key: "getCurrentUserData",
+    value: function getCurrentUserData() {
+      return _classPrivateFieldGet(this, _auth).currentUser;
+    }
   }]);
   return Auth;
 }();
@@ -19854,6 +19872,7 @@ var controlUserStateChange = function controlUserStateChange(user) {
   _loginView.default.clearHeaderButtons();
   if (user) {
     _loginView.default.showNavLogOutButton();
+    _loginView.default.showNavAccountButton(_auth.default.getCurrentUserData().email);
   } else {
     _loginView.default.showNavLoginButton();
   }
@@ -19894,7 +19913,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "14465" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "5774" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

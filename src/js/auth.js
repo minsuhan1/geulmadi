@@ -69,6 +69,10 @@ class Auth {
       handler(user);
     });
   }
+
+  getCurrentUserData() {
+    return this.#auth.currentUser;
+  }
 }
 
 export default new Auth();

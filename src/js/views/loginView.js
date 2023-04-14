@@ -3,6 +3,7 @@ import View from './View.js';
 class LoginView extends View {
   #btnLogin = document.querySelector('.nav__btn__login');
   #btnLogout = document.querySelector('.nav__btn__logout');
+  #btnAccount = document.querySelector('.nav__btn__account');
   #modal = document.querySelector('.login_modal');
   #form = document.querySelector('.form__login');
   #btnModalClose = document.getElementsByClassName('modal__close__btn')[0];
@@ -76,10 +77,16 @@ class LoginView extends View {
   showNavLogOutButton() {
     this.#btnLogout.classList.remove('hidden');
   }
+  /* nav 프로필 버튼 보이기 */
+  showNavAccountButton(tooltipText) {
+    this.#btnAccount.classList.remove('hidden');
+    document.querySelector('.account__text').textContent = `${tooltipText}`;
+  }
   /* nav 로그인/로그아웃 버튼 모두 제거 (초기화용) */
   clearHeaderButtons() {
     this.#btnLogin.classList.add('hidden');
     this.#btnLogout.classList.add('hidden');
+    this.#btnAccount.classList.add('hidden');
   }
 
   // @override
