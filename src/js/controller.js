@@ -153,16 +153,16 @@ const controlResetPassword = async function (email) {
     // 오류코드에 따른 메시지 표시
     switch (err.code) {
       case "auth/user-not-found":
-        loginView.renderError("존재하지 않는 계정입니다.");
+        resetPasswordView.renderError("존재하지 않는 계정입니다.");
         return;
       case "auth/network-request-failed":
-        loginView.renderError("네트워크 연결에 실패하였습니다.");
+        resetPasswordView.renderError("네트워크 연결에 실패하였습니다.");
         return;
       case "auth/internal-error":
-        loginView.renderError("잘못된 요청입니다.");
+        resetPasswordView.renderError("잘못된 요청입니다.");
         return;
       default:
-        loginView.renderError("링크 전송에 실패하였습니다.");
+        resetPasswordView.renderError("링크 전송에 실패하였습니다.");
     }
   }
 };
