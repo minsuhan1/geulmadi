@@ -2,6 +2,7 @@ import View from './View.js';
 
 class LoginView extends View {
   #btnLogin = document.querySelector('.nav__btn__login');
+  #btnLoginGoogle = document.querySelector('.google__login__btn');
   #btnLogout = document.querySelector('.nav__btn__logout');
   #btnAccount = document.querySelector('.nav__btn__account');
   #modal = document.querySelector('.login_modal');
@@ -30,6 +31,12 @@ class LoginView extends View {
   #addHandlerShowModal() {
     this.#btnLogin.addEventListener('click', this.#toggleModal.bind(this));
     this.#btnModalClose.addEventListener('click', this.#toggleModal.bind(this));
+
+    this.#form.addEventListener('keydown', function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+      }
+    });
   }
 
   #addHandlerShowRegisterModal() {
@@ -45,6 +52,19 @@ class LoginView extends View {
   }
 
   /* 로그인 폼 submit 클릭시 로직 */
+
+  /**
+   *
+   * @param { function } handler Controller의 Google 로그인 진행 함수
+   * @description Google 로그인을 진행하는 핸들러 함수가 실행될 수 있도록 핸들러를 등록
+   */
+  addHandlerSignInWithGoogle(handler) {
+    this.#btnLoginGoogle.addEventListener('click', function (e) {
+      // form 제출동작 방지
+      e.preventDefault();
+      handler();
+    });
+  }
 
   /**
    *

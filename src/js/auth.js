@@ -8,6 +8,8 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
 
 class Auth {
@@ -25,7 +27,31 @@ class Auth {
   // Initialize Firebase
   #firebase_app = initializeApp(this.#firebaseConfig);
   #auth = getAuth(this.#firebase_app);
+  #provider = new GoogleAuthProvider();
 
+  /**
+   * @description Google로 로그인
+   * @returns { Object } userCredential
+   */
+  async signInGoogle() {
+    try {
+      const data = await signInWithPopup(this.#auth, this.#provider);
+      const credential = GoogleAuthProvider.credentialFromResult(data);
+      const token = credential.accessToken;
+
+      return credential;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  /**
+   *
+   * @description 이메일/패스워드 기반 Firebase 계정 생성
+   * @param { string } email
+   * @param { string } password
+   * @returns { Object } userCredential
+   */
   async signUpEmail(email, password) {
     try {
       // ret data: (userCredential);
@@ -41,6 +67,13 @@ class Auth {
     }
   }
 
+  /**
+   *
+   * @description 이메일/패스워드 기반 Firebase 로그인
+   * @param { string } email
+   * @param { string } password
+   * @returns { Object } userCredential
+   */
   async signInEmail(email, password) {
     try {
       // ret data: (userCredential);
@@ -56,6 +89,10 @@ class Auth {
     }
   }
 
+  /**
+   *
+   * @description 현재 Firebase 인증 User 로그아웃
+   */
   async signOutUser() {
     try {
       await signOut(this.#auth);
@@ -64,12 +101,19 @@ class Auth {
     }
   }
 
+  /**
+   * @description 인증 정보 변경(로그인, 로그아웃 등)을 감지한 경우 Controller에서 실행할 함수 등록
+   * @param { Function } handler
+   */
   onUserStateChange(handler) {
     onAuthStateChanged(this.#auth, (user) => {
       handler(user);
     });
   }
 
+  /**
+   * @description 현재 유저 정보 제공
+   */
   getCurrentUserData() {
     return this.#auth.currentUser;
   }

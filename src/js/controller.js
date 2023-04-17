@@ -63,6 +63,7 @@ const controlSignIn = async function (formData) {
     // 로딩 스피너 표시
     loginView.toggleButtonSpinner();
     // Firebase 로그인 인증 대기
+    // formData[0]: Email, formData[1]: Password
     const data = await auth.signInEmail(formData[0], formData[1]);
     // 인증 완료 메시지 표시
     loginView.renderSuccessMessage("로그인 성공");
@@ -96,6 +97,37 @@ const controlSignIn = async function (formData) {
   }
 };
 
+/**
+ *
+ * @param { Array } formData loginView가 제공하는 form data
+ * @description 로그인 폼으로부터 입력받은 데이터를 auth.js에 정의된 Firebase 기반 로그인 함수에 전달하여 로그인을 진행함
+ *
+ */
+const controlSignInWithGoogle = async function (formData) {
+  try {
+    const data = await auth.signInGoogle();
+    // 인증 완료 메시지 표시
+    loginView.renderSuccessMessage("로그인 성공");
+    // 로그인 창 닫기
+    loginView.closeModal();
+  } catch (err) {
+    // 오류코드에 따른 메시지 표시
+    switch (err.code) {
+      case "auth/popup-closed-by-user":
+        // 팝업창 닫은 경우는 따로 메시지 표시 X
+        return;
+      case "auth/network-request-failed":
+        loginView.renderError("네트워크 연결에 실패하였습니다.");
+        return;
+      case "auth/internal-error":
+        loginView.renderError("잘못된 요청입니다.");
+        return;
+      default:
+        loginView.renderError("로그인에 실패하였습니다.");
+    }
+  }
+};
+
 /* 로그아웃 버튼 클릭 이벤트 핸들러 */
 const controlSignOut = async function () {
   try {
@@ -113,8 +145,7 @@ const controlSignOut = async function () {
  * @description 로그인 상태 변경 감지 시 실행할 핸들러
  */
 const controlUserStateChange = function (user) {
-  console.log("state changed", user);
-
+  console.log("user data: ", user);
   /* 로그인 상태에 따라 로그아웃/로그인 버튼 중 하나를 렌더링 */
   loginView.clearHeaderButtons();
   if (user) {
@@ -133,6 +164,7 @@ const init = function () {
   registerView.addHandlerCreateAccount(controlCreateAccount);
   loginView.addHandlerSignIn(controlSignIn);
   loginView.addHandlerSignOut(controlSignOut);
+  loginView.addHandlerSignInWithGoogle(controlSignInWithGoogle);
 };
 
 init();

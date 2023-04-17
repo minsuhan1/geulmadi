@@ -20,6 +20,11 @@
   }
 }
 
+.icon__account {
+  font-size: 2rem;
+  // color: #aea176;
+}
+
 // Floating add button
 .add__btn__floating {
   position: fixed;
@@ -36,19 +41,19 @@
   outline: 0;
   border: none;
   text-decoration: none;
-  background: rgb(174, 161, 118);
+  background: #aea176;
   text-align: center;
   border-radius: 50%;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 
   &:hover {
-    background: rgb(174, 161, 118, 0.8);
+    background: #aea176cc;
     transform: translateY(-5px);
     transition: 0.2s linear;
   }
 
   &:active {
-    background: rgb(174, 161, 118);
+    background: #aea176;
   }
 
   div {

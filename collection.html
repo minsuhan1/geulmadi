@@ -19,9 +19,8 @@
             <button class="nav__btn"><span>글마디 작성</span></button>
             <button class="nav__btn nav__btn__login hidden"><span>로그인</span></button>
             <button class="nav__btn nav__btn__logout hidden"><span>로그아웃</span></button>`
-            <button class="nav__btn nav__btn__account hidden">
-              <span class="material-icons">account_circle
-              </span>
+            <button class="nav__btn__account hidden">
+              <div class="material-icons icon__account">account_circle</div>
               <div class="account__text"></div>
             </button>
           </div>
@@ -153,6 +152,12 @@
           <span class="modal__close__btn">&times;</span>
           <div class="form__title">로그인</div>
           <div class="form__container">
+            <div class="form__sub__container">
+              <button class="google__login__btn">
+                Google로 시작하기
+              </button>
+            </div>
+
             <div class="form__sub__container">
               <label class="label">이메일</label>
               <input type="text" placeholder="이메일 주소를 입력하세요" class="login__input__email" required name="email">
