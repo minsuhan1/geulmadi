@@ -7,14 +7,17 @@ class LoginView extends View {
   #btnAccount = document.querySelector('.nav__btn__account');
   #modal = document.querySelector('.login_modal');
   #form = document.querySelector('.form__login');
-  #btnModalClose = document.getElementsByClassName('modal__close__btn')[0];
+  #btnModalClose = document.querySelector('.modal__close__btn.login');
   #modalRegister = document.querySelector('.register_modal');
+  #modalResetPsw = document.querySelector('.reset_psw_modal');
   #btnGotoRegister = document.querySelector('.btn__goto__register');
+  #btnGotoResetPsw = document.querySelector('.btn__goto__reset__psw');
 
   constructor() {
     super();
     this.#addHandlerShowModal();
     this.#addHandlerShowRegisterModal();
+    this.#addHandlerShowResetPswModal();
   }
 
   #toggleModal() {
@@ -26,6 +29,12 @@ class LoginView extends View {
     this.#toggleModal();
     this.#modalRegister.classList.toggle('hidden');
     this.#modalRegister.classList.toggle('fadein');
+  }
+
+  #showResetPswModal() {
+    this.#toggleModal();
+    this.#modalResetPsw.classList.toggle('hidden');
+    this.#modalResetPsw.classList.toggle('fadein');
   }
 
   #addHandlerShowModal() {
@@ -43,6 +52,13 @@ class LoginView extends View {
     this.#btnGotoRegister.addEventListener(
       'click',
       this.#showRegisterModal.bind(this)
+    );
+  }
+
+  #addHandlerShowResetPswModal() {
+    this.#btnGotoResetPsw.addEventListener(
+      'click',
+      this.#showResetPswModal.bind(this)
     );
   }
 

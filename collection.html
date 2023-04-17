@@ -149,7 +149,7 @@
       
       <div id="login_modal" class="modal__container login_modal hidden">
         <form class="form__modal form__login">
-          <span class="modal__close__btn">&times;</span>
+          <span class="modal__close__btn login">&times;</span>
           <div class="form__title">로그인</div>
           <div class="form__container">
             <div class="form__sub__container">
@@ -172,7 +172,7 @@
           </div>
       
           <div class="form__footer">
-            <div class="form__footer__item btn__goto__find__psw">비밀번호 찾기</div>
+            <div class="form__footer__item btn__goto__reset__psw">비밀번호 찾기</div>
             <div class="form__footer__item btn__goto__register">회원 가입하기</div>
           </div>
         </form>
@@ -180,7 +180,7 @@
         
       <div id="register_modal" class="modal__container register_modal hidden">
         <form class="form__modal form__register">
-          <span class="modal__close__btn">&times;</span>
+          <span class="modal__close__btn register">&times;</span>
           <div class="form__title">회원가입</div>
           <div class="form__container">
             
@@ -200,6 +200,21 @@
             </div>
             
             <button class="submit_btn submit__register" type="submit"><span class="btn__text">회원가입</span></button>
+          </div>
+        </form>
+      </div>
+      
+      <div id="reset_psw_modal" class="modal__container reset_psw_modal hidden">
+        <form class="form__modal form__reset_psw">
+          <span class="modal__close__btn reset_psw">&times;</span>
+          <div class="form__container">
+            
+            <div class="form__sub__container">
+              <label class="label">이메일</label>
+              <input type="text" placeholder="이메일 주소를 입력하세요" class="reset__psw__input__email" required name="email">
+            </div>
+            
+            <button class="submit_btn submit__reset__psw" type="submit"><span class="btn__text">비밀번호 재설정 링크 보내기</span></button>
           </div>
         </form>
       </div>

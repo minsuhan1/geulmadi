@@ -3,7 +3,7 @@ import View from './View.js';
 class RegisterView extends View {
   #modal = document.querySelector('.register_modal');
   #form = document.querySelector('.form__register');
-  #btnModalClose = document.getElementsByClassName('modal__close__btn')[1];
+  #btnModalClose = document.querySelector('.modal__close__btn.register');
 
   #pswInput = document.querySelector('.reg__input__psw');
   #pswChkInput = document.querySelector('.reg__input__psw__check');

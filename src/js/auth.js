@@ -10,6 +10,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 class Auth {
@@ -97,6 +98,20 @@ class Auth {
     try {
       await signOut(this.#auth);
     } catch (err) {
+      throw err;
+    }
+  }
+
+  /**
+   *
+   * @description 비밀번호 재설정
+   */
+  async resetPassword(email) {
+    try {
+      const data = await sendPasswordResetEmail(this.#auth, email);
+      return data;
+    } catch (err) {
+      console.log(err);
       throw err;
     }
   }

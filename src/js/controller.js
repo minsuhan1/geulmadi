@@ -2,6 +2,7 @@
 
 import loginView from "./views/loginView.js";
 import registerView from "./views/registerView.js";
+import resetPasswordView from "./views/resetPasswordView.js";
 import auth from "./auth.js";
 
 if (module.hot) {
@@ -128,6 +129,44 @@ const controlSignInWithGoogle = async function (formData) {
   }
 };
 
+/**
+ *
+ * @param { string } email resetPasswordView가 제공하는 email
+ * @description 주어진 email을 auth.js에 정의된 Firebase 기반 비밀번호 재설정 함수에 전달
+ *
+ */
+const controlResetPassword = async function (email) {
+  try {
+    // 로딩 스피너 표시
+    resetPasswordView.toggleButtonSpinner();
+    // 비밀번호 재설정 링크 전송
+    const data = await auth.resetPassword(email);
+    // 전송 완료 메시지 표시
+    resetPasswordView.renderSuccessMessage(
+      "비밀번호 재설정 링크를 보냈습니다. 메일을 확인하세요."
+    );
+    // 로딩 스피너 제거
+    resetPasswordView.toggleButtonSpinner();
+  } catch (err) {
+    // 로딩 스피너 제거
+    resetPasswordView.toggleButtonSpinner();
+    // 오류코드에 따른 메시지 표시
+    switch (err.code) {
+      case "auth/user-not-found":
+        loginView.renderError("존재하지 않는 계정입니다.");
+        return;
+      case "auth/network-request-failed":
+        loginView.renderError("네트워크 연결에 실패하였습니다.");
+        return;
+      case "auth/internal-error":
+        loginView.renderError("잘못된 요청입니다.");
+        return;
+      default:
+        loginView.renderError("링크 전송에 실패하였습니다.");
+    }
+  }
+};
+
 /* 로그아웃 버튼 클릭 이벤트 핸들러 */
 const controlSignOut = async function () {
   try {
@@ -165,6 +204,7 @@ const init = function () {
   loginView.addHandlerSignIn(controlSignIn);
   loginView.addHandlerSignOut(controlSignOut);
   loginView.addHandlerSignInWithGoogle(controlSignInWithGoogle);
+  resetPasswordView.addHandlerResetPassword(controlResetPassword);
 };
 
 init();
