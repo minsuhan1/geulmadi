@@ -2,8 +2,9 @@ import View from './View.js';
 
 class ResetPasswordView extends View {
   #modal = document.querySelector('.reset_psw_modal');
-  #form = document.querySelector('.form__reset_psw');
-  #btnModalClose = document.querySelector('.modal__close__btn.reset_psw');
+  #form = this.#modal.querySelector('.form__modal');
+  #btnModalClose = this.#form.querySelector('.modal__close__btn');
+  #btnSubmit = this.#form.querySelector('.submit_btn');
 
   constructor() {
     super();
@@ -45,7 +46,7 @@ class ResetPasswordView extends View {
 
   // @override
   toggleButtonSpinner() {
-    document.querySelector('.submit__reset__psw').classList.toggle('spinner');
+    this.#btnSubmit.classList.toggle('spinner');
   }
 }
 

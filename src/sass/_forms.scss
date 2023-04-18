@@ -1,22 +1,4 @@
 /* 로그인, 회원가입 모달 */
-.modal__container {
-  // display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 11; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.4); /* 배경색 */
-  backdrop-filter: blur(5px); /* 배경 블러효과 */
-  padding-top: 60px;
-
-  &.hidden {
-    display: none;
-  }
-}
-
 .form__modal {
   display: flex;
   flex-direction: column;
@@ -27,6 +9,7 @@
   padding: 30px;
   border-radius: 8px;
   position: relative;
+  margin-top: 6rem;
 }
 
 .form__title {
@@ -101,10 +84,12 @@
   top: 0;
   color: rgba(0, 0, 0, 0.5);
   font-size: 35px;
-  font-weight: bold;
+  // font-weight: bold;
   cursor: pointer;
 
   &:hover {
     color: rgba(0, 0, 0, 1);
   }
 }
+
+/* 업로드 폼 윈도우 */

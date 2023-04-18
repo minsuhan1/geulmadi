@@ -1,13 +1,19 @@
 import View from './View.js';
 
 class LoginView extends View {
+  // header nav
   #btnLogin = document.querySelector('.nav__btn__login');
-  #btnLoginGoogle = document.querySelector('.google__login__btn');
   #btnLogout = document.querySelector('.nav__btn__logout');
   #btnAccount = document.querySelector('.nav__btn__account');
+
+  // login window
   #modal = document.querySelector('.login_modal');
-  #form = document.querySelector('.form__login');
-  #btnModalClose = document.querySelector('.modal__close__btn.login');
+  #form = this.#modal.querySelector('.form__modal');
+  #btnModalClose = this.#form.querySelector('.modal__close__btn');
+  #btnLoginGoogle = document.querySelector('.google__login__btn');
+  #btnSubmit = this.#form.querySelector('.submit_btn');
+
+  // goto elements
   #modalRegister = document.querySelector('.register_modal');
   #modalResetPsw = document.querySelector('.reset_psw_modal');
   #btnGotoRegister = document.querySelector('.btn__goto__register');
@@ -127,7 +133,7 @@ class LoginView extends View {
 
   // @override
   toggleButtonSpinner() {
-    document.querySelector('.submit__login').classList.toggle('spinner');
+    this.#btnSubmit.classList.toggle('spinner');
   }
 }
 

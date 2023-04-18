@@ -167,7 +167,9 @@ const controlResetPassword = async function (email) {
   }
 };
 
-/* 로그아웃 버튼 클릭 이벤트 핸들러 */
+/**
+ * @description 로그아웃 버튼 클릭 이벤트 핸들러
+ */
 const controlSignOut = async function () {
   try {
     await auth.signOutUser();

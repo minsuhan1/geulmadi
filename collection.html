@@ -147,9 +147,9 @@
         </div>
       </button> 
       
-      <div id="login_modal" class="modal__container login_modal hidden">
-        <form class="form__modal form__login">
-          <span class="modal__close__btn login">&times;</span>
+      <div class="overlay login_modal hidden">
+        <form class="form__modal">
+          <span class="modal__close__btn">&times;</span>
           <div class="form__title">로그인</div>
           <div class="form__container">
             <div class="form__sub__container">
@@ -160,15 +160,15 @@
 
             <div class="form__sub__container">
               <label class="label">이메일</label>
-              <input type="text" placeholder="이메일 주소를 입력하세요" class="login__input__email" required name="email">
+              <input type="text" placeholder="이메일 주소를 입력하세요" required name="email">
             </div>
             
             <div class="form__sub__container">
               <label class="label">비밀번호</label>
-              <input type="password" placeholder="비밀번호를 입력하세요" class="login__input__psw" required name="psw">              
+              <input type="password" placeholder="비밀번호를 입력하세요" required name="psw">              
             </div>
   
-            <button class="submit_btn submit__login" type="submit"><span class="btn__text">로그인</span></button>
+            <button class="submit_btn" type="submit"><span class="btn__text">로그인</span></button>
           </div>
       
           <div class="form__footer">
@@ -178,45 +178,61 @@
         </form>
       </div>
         
-      <div id="register_modal" class="modal__container register_modal hidden">
-        <form class="form__modal form__register">
-          <span class="modal__close__btn register">&times;</span>
+      <div class="overlay register_modal hidden">
+        <form class="form__modal">
+          <span class="modal__close__btn">&times;</span>
           <div class="form__title">회원가입</div>
           <div class="form__container">
             
             <div class="form__sub__container">
               <label class="label">이메일</label>
-              <input type="text" placeholder="이메일 주소를 입력하세요" class="reg__input__email" required name="email">
+              <input type="text" placeholder="이메일 주소를 입력하세요" required name="email">
             </div>
               
             <div class="form__sub__container">
               <label class="label">비밀번호</label>
-              <input type="password" placeholder="비밀번호를 입력하세요" class="reg__input__psw" required name="psw">      
+              <input type="password" placeholder="비밀번호를 입력하세요" required name="psw">      
             </div>
 
             <div class="form__sub__container">
               <label class="label">비밀번호 확인</label>
-              <input type="password" placeholder="비밀번호를 한번 더 입력하세요" class="reg__input__psw__check" required name="psw_chk">
+              <input type="password" placeholder="비밀번호를 한번 더 입력하세요" required name="psw_chk">
             </div>
             
-            <button class="submit_btn submit__register" type="submit"><span class="btn__text">회원가입</span></button>
+            <button class="submit_btn" type="submit"><span class="btn__text">회원가입</span></button>
           </div>
         </form>
       </div>
       
-      <div id="reset_psw_modal" class="modal__container reset_psw_modal hidden">
-        <form class="form__modal form__reset_psw">
-          <span class="modal__close__btn reset_psw">&times;</span>
+      <div class="overlay reset_psw_modal hidden">
+        <form class="form__modal">
+          <span class="modal__close__btn">&times;</span>
           <div class="form__container">
             
+            <div class="form__sub__container">
+              <label class="label">이메일</label>
+              <input type="text" placeholder="이메일 주소를 입력하세요" required name="email">
+            </div>
+            
+            <button class="submit_btn" type="submit"><span class="btn__text">비밀번호 재설정 링크 보내기</span></button>
+          </div>
+        </form>
+      </div>
+
+      <!-- <div class="overlay upload_modal hidden">
+        <form class="form__modal">
+          <span class="modal__close__btn">&times;</span>
+          <div class="form__container">
             <div class="form__sub__container">
               <label class="label">이메일</label>
               <input type="text" placeholder="이메일 주소를 입력하세요" class="reset__psw__input__email" required name="email">
             </div>
             
-            <button class="submit_btn submit__reset__psw" type="submit"><span class="btn__text">비밀번호 재설정 링크 보내기</span></button>
+            <button class="submit_btn" type="submit"><span class="btn__text">업로드</span></button>
           </div>
         </form>
-      </div>
+      </div> -->
+
+      
   </body>
 </html>

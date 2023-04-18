@@ -2,11 +2,12 @@ import View from './View.js';
 
 class RegisterView extends View {
   #modal = document.querySelector('.register_modal');
-  #form = document.querySelector('.form__register');
-  #btnModalClose = document.querySelector('.modal__close__btn.register');
+  #form = this.#modal.querySelector('.form__modal');
+  #btnModalClose = this.#form.querySelector('.modal__close__btn');
+  #btnSubmit = this.#form.querySelector('.submit_btn');
 
-  #pswInput = document.querySelector('.reg__input__psw');
-  #pswChkInput = document.querySelector('.reg__input__psw__check');
+  #pswInput = this.#form.querySelector("[name='psw']");
+  #pswChkInput = this.#form.querySelector("[name='psw_chk']");
 
   constructor() {
     super();
@@ -75,7 +76,7 @@ class RegisterView extends View {
 
   // @override
   toggleButtonSpinner() {
-    document.querySelector('.submit__register').classList.toggle('spinner');
+    this.#btnSubmit.classList.toggle('spinner');
   }
 }
 
