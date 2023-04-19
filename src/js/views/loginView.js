@@ -27,6 +27,8 @@ class LoginView extends View {
   }
 
   #toggleModal() {
+    // 모든 input value 제거
+    this.#form.reset();
     this.#modal.classList.toggle('hidden');
     this.#modal.classList.toggle('fadein');
   }
@@ -106,8 +108,6 @@ class LoginView extends View {
 
   /* 로그인 창 닫기 */
   closeModal() {
-    // 모든 input value 제거
-    this.#form.reset();
     this.#toggleModal();
   }
 

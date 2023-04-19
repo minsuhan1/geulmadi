@@ -31,6 +31,8 @@ class RegisterView extends View {
   }
 
   #toggleModal() {
+    // 모든 input value 제거
+    this.#form.reset();
     this.#modal.classList.toggle('hidden');
     this.#modal.classList.toggle('fadein');
   }
@@ -69,8 +71,6 @@ class RegisterView extends View {
 
   /* 회원가입 창 닫기 */
   closeModal() {
-    // 모든 input value 제거
-    this.#form.reset();
     this.#toggleModal();
   }
 

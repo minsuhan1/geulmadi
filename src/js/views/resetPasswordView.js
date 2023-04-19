@@ -17,6 +17,8 @@ class ResetPasswordView extends View {
   }
 
   #toggleModal() {
+    // 모든 input value 제거
+    this.#form.reset();
     this.#modal.classList.toggle('hidden');
     this.#modal.classList.toggle('fadein');
   }
@@ -39,8 +41,6 @@ class ResetPasswordView extends View {
 
   /* 비밀번호 찾기 창 닫기 */
   closeModal() {
-    // 모든 input value 제거
-    this.#form.reset();
     this.#toggleModal();
   }
 

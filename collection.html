@@ -16,7 +16,6 @@
         <a href="index.html">LOGO</a>
         <nav class="nav">
           <div class="nav__list">
-            <button class="nav__btn"><span>글마디 작성</span></button>
             <button class="nav__btn nav__btn__login hidden"><span>로그인</span></button>
             <button class="nav__btn nav__btn__logout hidden"><span>로그아웃</span></button>`
             <button class="nav__btn__account hidden">
@@ -208,7 +207,7 @@
         <form class="form__modal">
           <span class="modal__close__btn">&times;</span>
           <div class="form__container">
-            
+            <div class="form__sub__container"></div>
             <div class="form__sub__container">
               <label class="label">이메일</label>
               <input type="text" placeholder="이메일 주소를 입력하세요" required name="email">
@@ -219,19 +218,46 @@
         </form>
       </div>
 
-      <!-- <div class="overlay upload_modal hidden">
+      <div class="overlay upload_modal hidden">
         <form class="form__modal">
           <span class="modal__close__btn">&times;</span>
           <div class="form__container">
+            <div class="form__sub__container"></div>
             <div class="form__sub__container">
-              <label class="label">이메일</label>
-              <input type="text" placeholder="이메일 주소를 입력하세요" class="reset__psw__input__email" required name="email">
+              <label class="label">어디서 발견했나요?</label>
+              <fieldset>
+                <div>
+                  <input type="radio" name="type" id="phrase" value="phrase" checked>
+                  <label for="phrase">책</label>
+                </div>
+                <div>
+                  <input type="radio" name="type" id="lyric" value="lyric">
+                  <label for="lyric">노래</label>
+                </div>
+              </fieldset>
+            </div>
+            <div class="form__sub__container">
+              <label class="label">책 제목이 무엇인가요?</label>
+              <input type="text" placeholder="책 제목을 입력하세요" required name="reference">
+            </div>
+            <div class="form__sub__container">
+              <label class="label">누가 쓴 책인가요?</label>
+              <input type="text" placeholder="작가 이름을 입력하세요" required name="author">
+            </div>
+            <div class="form__sub__container">
+              <label class="label">내용</label>
+              <textarea name="body" placeholder="공유하고 싶은 구절을 입력하세요" rows="10" required></textarea>
+            </div>
+            <div class="form__sub__container">
+              <label class="label">태그</label>
+              <input type="text" placeholder="콤마(,)로 구분해주세요" required name="tags">
             </div>
             
-            <button class="submit_btn" type="submit"><span class="btn__text">업로드</span></button>
+            
+            <button class="submit_btn" type="submit"><span class="btn__text">글마디 등록</span></button>
           </div>
         </form>
-      </div> -->
+      </div>
 
       
   </body>

@@ -3,12 +3,15 @@
 import loginView from "./views/loginView.js";
 import registerView from "./views/registerView.js";
 import resetPasswordView from "./views/resetPasswordView.js";
+import uploadView from "./views/uploadView.js";
+import * as model from "./model.js";
 import auth from "./auth.js";
 
 if (module.hot) {
   module.hot.accept();
 }
 
+///////////// AUTH ///////////////
 /**
  *
  * @param { Array } formData registerView가 제공하는 form data
@@ -197,16 +200,45 @@ const controlUserStateChange = function (user) {
   }
 };
 
+///////////// CRUD ///////////////
+/**
+ * @param { Object } uploadView로부터 받은 formData
+ * @description 업로드 폼 제출버튼 클릭 감지 시 업로드 작업을 실행할 핸들러
+ */
+const controlUpload = async function (formData) {
+  try {
+    uploadView.toggleButtonSpinner();
+
+    // 업로드 요청
+    const uid = auth.getCurrentUserID();
+    const token = await auth.getCurrentIdToken();
+    const data = await model.uploadPost(formData, uid, token);
+
+    uploadView.toggleButtonSpinner();
+    uploadView.renderSuccessMessage("글마디가 등록되었어요!");
+    console.log(data);
+
+    // 등록 창 닫고 페이지 reload
+  } catch (err) {
+    uploadView.toggleButtonSpinner();
+    uploadView.renderError("등록 중 오류가 발생했습니다.");
+  }
+};
+
 /**
  * @description View / Auth 측에서 감지한 각 이벤트들에 대해 핸들러를 구독발행하는 메서드
  */
 const init = function () {
+  // 인증 관련 handlers
   auth.onUserStateChange(controlUserStateChange);
   registerView.addHandlerCreateAccount(controlCreateAccount);
   loginView.addHandlerSignIn(controlSignIn);
   loginView.addHandlerSignOut(controlSignOut);
   loginView.addHandlerSignInWithGoogle(controlSignInWithGoogle);
   resetPasswordView.addHandlerResetPassword(controlResetPassword);
+
+  // 업로드 관련 handlers
+  uploadView.addHandlerUpload(controlUpload);
 };
 
 init();

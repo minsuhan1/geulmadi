@@ -131,6 +131,25 @@ class Auth {
   getCurrentUserData() {
     return this.#auth.currentUser;
   }
+
+  /**
+   * @description 현재 유저 id 제공
+   */
+  getCurrentUserID() {
+    return this.#auth.currentUser.uid;
+  }
+
+  /**
+   * @description 현재 유저 id token 제공
+   */
+  async getCurrentIdToken() {
+    try {
+      const idToken = await this.#auth.currentUser.getIdToken();
+      return idToken;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 export default new Auth();
