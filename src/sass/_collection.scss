@@ -85,7 +85,9 @@
 }
 
 .popular__container {
-  flex-basis: 70rem;
+  flex-basis: 30rem;
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 .collection__container {

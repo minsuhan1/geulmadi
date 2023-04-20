@@ -6,6 +6,7 @@ import resetPasswordView from "./views/resetPasswordView.js";
 import uploadView from "./views/uploadView.js";
 import * as model from "./model.js";
 import auth from "./auth.js";
+import recentPostsView from "./views/recentPostsView.js";
 
 if (module.hot) {
   module.hot.accept();
@@ -218,10 +219,30 @@ const controlUpload = async function (formData) {
     uploadView.renderSuccessMessage("글마디가 등록되었어요!");
     console.log(data);
 
-    // 등록 창 닫고 페이지 reload
+    // 등록 창 닫고 최근 글마디 reload
+    uploadView.closeModal();
+    controlLoadRecentPosts();
   } catch (err) {
     uploadView.toggleButtonSpinner();
     uploadView.renderError("등록 중 오류가 발생했습니다.");
+  }
+};
+
+/**
+ * @description 글마디 데이터를 불러와서 렌더링
+ */
+const controlLoadRecentPosts = async function () {
+  try {
+    // 글마디 데이터 불러오기 (MODEL)
+    recentPostsView.toggleSpinner();
+    const data = await model.loadRecentPost();
+    recentPostsView.toggleSpinner();
+
+    // 글마디 렌더링 (VIEW)
+    if (data) recentPostsView.render(data);
+  } catch (err) {
+    recentPostsView.toggleSpinner();
+    recentPostsView.renderError(err);
   }
 };
 
@@ -239,6 +260,7 @@ const init = function () {
 
   // 업로드 관련 handlers
   uploadView.addHandlerUpload(controlUpload);
+  recentPostsView.addHandlerLoad(controlLoadRecentPosts);
 };
 
 init();

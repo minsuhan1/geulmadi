@@ -75,6 +75,10 @@ class UploadView extends View {
   toggleButtonSpinner() {
     this.#btnSubmit.classList.toggle('spinner');
   }
+
+  closeModal() {
+    this.#toggleModal();
+  }
 }
 
 export default new UploadView();
