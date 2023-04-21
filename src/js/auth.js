@@ -120,7 +120,7 @@ class Auth {
    * @param { Function } handler
    */
   onUserStateChange(handler) {
-    onAuthStateChanged(this.#auth, (user) => {
+    this.#auth.onAuthStateChanged((user) => {
       handler(user);
     });
   }

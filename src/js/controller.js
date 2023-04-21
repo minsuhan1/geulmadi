@@ -12,6 +12,9 @@ if (module.hot) {
   module.hot.accept();
 }
 
+let uid;
+let token;
+
 ///////////// AUTH ///////////////
 /**
  *
@@ -187,10 +190,17 @@ const controlSignOut = async function () {
 /**
  *
  * @param { Object } user Firebase Auth 유저 객체
- * @description 로그인 상태 변경 감지 시 실행할 핸들러
+ * @description 로그인 상태 변경 감지 후 유저id, 토큰 등을 받고 헤더 렌더링
  */
-const controlUserStateChange = function (user) {
+const controlUserStateChange = async function (user) {
   console.log("user data: ", user);
+  if (user) {
+    uid = user.uid;
+    token = await user.getIdToken();
+  } else {
+    uid = null;
+    token = null;
+  }
   /* 로그인 상태에 따라 로그아웃/로그인 버튼 중 하나를 렌더링 */
   loginView.clearHeaderButtons();
   if (user) {
@@ -211,8 +221,6 @@ const controlUpload = async function (formData) {
     uploadView.toggleButtonSpinner();
 
     // 업로드 요청
-    const uid = auth.getCurrentUserID();
-    const token = await auth.getCurrentIdToken();
     const data = await model.uploadPost(formData, uid, token);
 
     uploadView.toggleButtonSpinner();
@@ -233,13 +241,18 @@ const controlUpload = async function (formData) {
  */
 const controlLoadRecentPosts = async function () {
   try {
+    // 현재 글마디 리스트 컨테이너 초기화
+    recentPostsView.clearList();
     // 글마디 데이터 불러오기 (MODEL)
     recentPostsView.toggleSpinner();
     const data = await model.loadRecentPost();
-    recentPostsView.toggleSpinner();
 
     // 글마디 렌더링 (VIEW)
-    if (data) recentPostsView.render(data);
+    const userFavorites = await model.loadUserFavorites(uid);
+    if (data) {
+      recentPostsView.render(data, userFavorites);
+    }
+    recentPostsView.toggleSpinner();
   } catch (err) {
     recentPostsView.toggleSpinner();
     recentPostsView.renderError(err);
@@ -247,20 +260,40 @@ const controlLoadRecentPosts = async function () {
 };
 
 /**
- * @description View / Auth 측에서 감지한 각 이벤트들에 대해 핸들러를 구독발행하는 메서드
+ * @description 좋아요 버튼 클릭시 기능
+ * @param 좋아요 버튼이 클릭된 글마디 id
  */
-const init = function () {
-  // 인증 관련 handlers
-  auth.onUserStateChange(controlUserStateChange);
-  registerView.addHandlerCreateAccount(controlCreateAccount);
-  loginView.addHandlerSignIn(controlSignIn);
-  loginView.addHandlerSignOut(controlSignOut);
-  loginView.addHandlerSignInWithGoogle(controlSignInWithGoogle);
-  resetPasswordView.addHandlerResetPassword(controlResetPassword);
-
-  // 업로드 관련 handlers
-  uploadView.addHandlerUpload(controlUpload);
-  recentPostsView.addHandlerLoad(controlLoadRecentPosts);
+const controlLike = async function (postId, type) {
+  try {
+    // model에 좋아요 여부 반영 요청
+    await model.saveLike(postId, uid, type, token);
+  } catch (err) {
+    recentPostsView.renderError(err);
+  }
 };
 
-init();
+/**
+ * @description 로그인 정보 변경(새로고침 포함) 감지 시 Auth 정보 초기화 및 글마디 로드
+ */
+const init = async function (user) {
+  await controlUserStateChange(user);
+
+  // 추후 href에 따라 분기하여 로드(인기, 최근, 내 글마디 등)
+  controlLoadRecentPosts();
+};
+
+///////////////////// 실행 스크립트 /////////////////////
+
+// 인증 관련 handlers 등록
+registerView.addHandlerCreateAccount(controlCreateAccount);
+loginView.addHandlerSignIn(controlSignIn);
+loginView.addHandlerSignOut(controlSignOut);
+loginView.addHandlerSignInWithGoogle(controlSignInWithGoogle);
+resetPasswordView.addHandlerResetPassword(controlResetPassword);
+
+// 로그인 정보 불러오기
+auth.onUserStateChange(init);
+
+// 업로드 관련 handlers
+uploadView.addHandlerUpload(controlUpload);
+recentPostsView.addHandlerBtnLike(controlLike);

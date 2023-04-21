@@ -19,6 +19,15 @@ export default class View {
     });
   }
 
+  /* 안내 메시지 표시 */
+  renderInfoMessage(message) {
+    Swal.fire({
+      text: message,
+      icon: 'info',
+      timer: 2000,
+    });
+  }
+
   /* 버튼 로딩 스피너 표시 및 제거 */
   toggleButtonSpinner() {}
 }
