@@ -28,25 +28,45 @@ class UploadView extends View {
    * @description 선택한 글마디 종류에 따라 폼 양식을 변경
    */
   #addHandlerSelectType() {
+    this.#form
+      .querySelector('#lyric')
+      .addEventListener(
+        'click',
+        this.#renderPlaceHolderAsType.bind(this, 'lyric')
+      );
+
+    this.#form
+      .querySelector('#phrase')
+      .addEventListener(
+        'click',
+        this.#renderPlaceHolderAsType.bind(this, 'phrase')
+      );
+  }
+
+  /**
+   * @description 글마디 타입에 따라 폼 양식 변경
+   * @param { String } type : 'phrase' | 'lyric'
+   */
+  #renderPlaceHolderAsType(type) {
     const labels = this.#form.getElementsByClassName('label');
     const inputs = this.#form.querySelectorAll('input[type="text"]');
     const textarea = this.#form.querySelector('textarea');
 
-    this.#form.querySelector('#lyric').addEventListener('click', () => {
-      labels[1].textContent = '노래 제목이 무엇인가요?';
-      inputs[0].placeholder = '노래 제목';
-      labels[2].textContent = '누구의 노래인가요?';
-      inputs[1].placeholder = '가수 이름';
-      textarea.placeholder = '공유하고 싶은 가사를 입력해주세요';
-    });
-
-    this.#form.querySelector('#phrase').addEventListener('click', () => {
+    if (type === 'phrase') {
       labels[1].textContent = '책 제목이 무엇인가요?';
       inputs[0].placeholder = '책 제목';
       labels[2].textContent = '누가 쓴 책인가요?';
       inputs[1].placeholder = '작가 이름';
       textarea.placeholder = '공유하고 싶은 구절을 입력해주세요';
-    });
+    }
+
+    if (type === 'lyric') {
+      labels[1].textContent = '노래 제목이 무엇인가요?';
+      inputs[0].placeholder = '노래 제목';
+      labels[2].textContent = '누구의 노래인가요?';
+      inputs[1].placeholder = '가수 이름';
+      textarea.placeholder = '공유하고 싶은 가사를 입력해주세요';
+    }
   }
 
   /**
@@ -78,6 +98,35 @@ class UploadView extends View {
 
   closeModal() {
     this.#toggleModal();
+  }
+
+  /**
+   * @description 글마디 수정을 위한 모달 창 열기
+   * @param { Object } 수정할 글마디 데이터
+   */
+  openEditModal(postData) {
+    // 업로드 모달 창 열기
+    this.#toggleModal();
+
+    // 원본 글마디 데이터를 입력창에 표시
+    const inputs = this.#form.querySelectorAll('input[type="text"]');
+    const textarea = this.#form.querySelector('textarea');
+
+    inputs[0].value = postData.reference;
+    inputs[1].value = postData.author;
+    textarea.textContent = postData.body.replaceAll('<br>', '\n');
+    inputs[2].value = postData.tags.join(',');
+
+    // 원본 글마디 type에 따라 버튼 선택 및 양식 변경
+    const radioInputs = this.#form.querySelectorAll('input[type="radio"]');
+
+    if (postData.type === 'lyric') {
+      // 기본값은 '책'
+      // 가사인 경우 가사 버튼 선택
+      radioInputs[0].checked = false;
+      radioInputs[1].checked = true;
+    }
+    this.#renderPlaceHolderAsType(postData.type);
   }
 }
 

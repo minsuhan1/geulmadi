@@ -14,6 +14,7 @@ if (module.hot) {
 
 let uid;
 let token;
+let editPostId;
 
 ///////////// AUTH ///////////////
 /**
@@ -212,6 +213,7 @@ const controlUserStateChange = async function (user) {
 };
 
 ///////////// CRUD ///////////////
+
 /**
  * @param { Object } uploadView로부터 받은 formData
  * @description 업로드 폼 제출버튼 클릭 감지 시 업로드 작업을 실행할 핸들러
@@ -220,16 +222,23 @@ const controlUpload = async function (formData) {
   try {
     uploadView.toggleButtonSpinner();
 
-    // 업로드 요청
-    const data = await model.uploadPost(formData, uid, token);
+    // 업로드 요청(editPostId 존재여부에 따라 수정 또는 추가)
+    if (editPostId) {
+      // 글마디 수정 요청
+      await model.uploadPost(formData, uid, token, editPostId);
+    } else {
+      // 글마디 추가 요청
+      await model.uploadPost(formData, uid, token);
+    }
 
     uploadView.toggleButtonSpinner();
     uploadView.renderSuccessMessage("글마디가 등록되었어요!");
-    console.log(data);
 
+    // 수정 후 editPostId 초기화
+    editPostId = null;
     // 등록 창 닫고 최근 글마디 reload
     uploadView.closeModal();
-    controlLoadRecentPosts();
+    await controlLoadRecentPosts();
   } catch (err) {
     uploadView.toggleButtonSpinner();
     uploadView.renderError("등록 중 오류가 발생했습니다.");
@@ -250,12 +259,46 @@ const controlLoadRecentPosts = async function () {
     // 글마디 렌더링 (VIEW)
     const userFavorites = await model.loadUserFavorites(uid);
     if (data) {
-      recentPostsView.render(data, userFavorites);
+      recentPostsView.render(data, userFavorites, uid);
     }
     recentPostsView.toggleSpinner();
   } catch (err) {
     recentPostsView.toggleSpinner();
     recentPostsView.renderError(err);
+  }
+};
+
+/**
+ * @description 삭제 버튼 클릭시 기능
+ * @param 삭제 버튼이 클릭된 글마디 id
+ */
+const controlDelete = async function (postId) {
+  if (confirm("선택한 글마디가 삭제됩니다")) {
+    try {
+      // 글마디 삭제 요청
+      await model.deletePost(postId, token);
+      // 최근 글마디 reload
+      await controlLoadRecentPosts();
+    } catch (err) {
+      recentPostsView.renderError(err);
+    }
+  }
+};
+
+/**
+ * @description 수정 버튼 클릭시 기능
+ * @param 수정 버튼이 클릭된 글마디 id
+ */
+const controlEdit = async function (postId) {
+  try {
+    // 수정될 postId를 저장
+    // 실제 수정 작업은 controlUpload에서 editPostId가 존재하는지에 따라 진행
+    editPostId = postId;
+    // 수정할 글마디 데이터를 받아서 수정 창에 전달만 해주면 됨
+    const postData = await model.loadSinglePost(postId);
+    uploadView.openEditModal(postData);
+  } catch (err) {
+    uploadView.renderError(err);
   }
 };
 
@@ -272,6 +315,8 @@ const controlLike = async function (postId, type) {
   }
 };
 
+///////////////////// INIT /////////////////////
+
 /**
  * @description 로그인 정보 변경(새로고침 포함) 감지 시 Auth 정보 초기화 및 글마디 로드
  */
@@ -279,7 +324,7 @@ const init = async function (user) {
   await controlUserStateChange(user);
 
   // 추후 href에 따라 분기하여 로드(인기, 최근, 내 글마디 등)
-  controlLoadRecentPosts();
+  await controlLoadRecentPosts();
 };
 
 ///////////////////// 실행 스크립트 /////////////////////
@@ -294,6 +339,8 @@ resetPasswordView.addHandlerResetPassword(controlResetPassword);
 // 로그인 정보 불러오기
 auth.onUserStateChange(init);
 
-// 업로드 관련 handlers
+// 글마디 CRUD 관련 handlers
 uploadView.addHandlerUpload(controlUpload);
 recentPostsView.addHandlerBtnLike(controlLike);
+recentPostsView.addHandlerBtnDelete(controlDelete);
+recentPostsView.addHandlerBtnEdit(controlEdit);

@@ -129,11 +129,25 @@ blockquote {
   background: #ededed;
 
   span {
-    display: block;
-    color: #333333;
-    font-style: normal;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 1em;
+
+    .material-icons {
+      color: rgb(0, 0, 0, 0.3);
+      font-size: 1.4em;
+      margin: 0;
+
+      &:hover {
+        color: rgb(0, 0, 0, 0.7);
+      }
+    }
+    .reference {
+      color: #333333;
+      font-style: normal;
+      font-weight: bold;
+    }
   }
 
   &::before {
