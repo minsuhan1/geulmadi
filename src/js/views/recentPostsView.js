@@ -2,11 +2,58 @@ import { API_URL_LIKES } from '../config.js';
 import View from './View.js';
 
 class RecentPostsView extends View {
+  // 필터 컨테이너
+  #filters_container = document.querySelector('.filters__container');
   // 글마디 리스트 컨테이너
-  #container = document.querySelector('.collection__container');
+  #container = document.querySelector('.posts__container');
 
   constructor() {
     super();
+    this.#addFilterListeners();
+  }
+
+  /**
+   * @description 필터를 클릭하거나 페이지 새로고침 시 필터 활성화 표시
+   */
+  #addFilterListeners() {
+    // 필터 링크 클릭 시 해당 필터 활성화 표시
+    this.#filters_container.addEventListener('click', e => {
+      if (e.target.nodeName === 'A') {
+        // 이전 활성화된 버튼의 bottom border 제거
+        const btnActivated = this.#filters_container.querySelector('.selected');
+        btnActivated?.classList.remove('selected', 'disabled');
+
+        // 클릭한 버튼의 bottom border 활성화
+        e.target.closest('.btn').classList.add('selected', 'disabled');
+      }
+    });
+
+    // 페이지 새로고침(load) 시 href 값에 따라 활성화 필터 표시
+    window.addEventListener('load', () => {
+      if (location.hash) {
+        const btn = this.#filters_container
+          .querySelector(`a[href='${location.hash}']`)
+          .closest('.btn');
+        btn.classList.add('selected', 'disabled');
+      } else {
+        const btn = this.#filters_container
+          .querySelector("a[href='#recent']")
+          .closest('.btn');
+        btn.classList.add('selected', 'disabled');
+      }
+    });
+  }
+
+  /**
+   * @description 필터가 선택되거나 페이지가 새로고침될 때 controller가 등록한 handler 실행
+   * @param { Function } handler : 주어진 필터에 해당하는 글마디 리스트 로드하는 핸들러
+   */
+  addHandlerFilter(handler) {
+    ['hashchange'].forEach(ev =>
+      window.addEventListener(ev, () => {
+        handler(location.hash);
+      })
+    );
   }
 
   /**
@@ -103,15 +150,14 @@ class RecentPostsView extends View {
    * @param { String[] } userFavorites : 유저가 좋아요한 글마디 id 배열
    * @param { String } uid : 유저 id
    */
-  render(data, userFavorites, uid) {
+  render(dataArr, userFavorites, uid) {
     let markup = '';
 
     // ID of posts
-    const ids = Object.keys(data);
-    ids.reverse(); // 최신순 정렬
 
-    ids.forEach(id => {
-      const post = data[id];
+    dataArr.forEach(data => {
+      const id = data[0];
+      const post = data[1];
 
       // 좋아요 표시한 글마디인지 여부
       const liked = userFavorites

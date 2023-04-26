@@ -74,6 +74,8 @@ class UploadView extends View {
    */
   #toggleModal() {
     this.#form.reset();
+    // 양식 기본값으로 변경
+    this.#renderPlaceHolderAsType('phrase');
     this.#modal.classList.toggle('hidden');
     this.#modal.classList.toggle('fadein');
   }
@@ -114,7 +116,7 @@ class UploadView extends View {
 
     inputs[0].value = postData.reference;
     inputs[1].value = postData.author;
-    textarea.textContent = postData.body.replaceAll('<br>', '\n');
+    textarea.value = postData.body.replaceAll('<br>', '\n');
     inputs[2].value = postData.tags.join(',');
 
     // 원본 글마디 type에 따라 버튼 선택 및 양식 변경

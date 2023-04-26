@@ -238,7 +238,7 @@ const controlUpload = async function (formData) {
     editPostId = null;
     // 등록 창 닫고 최근 글마디 reload
     uploadView.closeModal();
-    await controlLoadRecentPosts();
+    await controlLoadPosts("#recent");
   } catch (err) {
     uploadView.toggleButtonSpinner();
     uploadView.renderError("등록 중 오류가 발생했습니다.");
@@ -248,16 +248,33 @@ const controlUpload = async function (formData) {
 /**
  * @description 글마디 데이터를 불러와서 렌더링
  */
-const controlLoadRecentPosts = async function () {
+const controlLoadPosts = async function (hash) {
   try {
     // 현재 글마디 리스트 컨테이너 초기화
     recentPostsView.clearList();
+
     // 글마디 데이터 불러오기 (MODEL)
     recentPostsView.toggleSpinner();
-    const data = await model.loadRecentPost();
+
+    // 유저가 좋아요한 글마디
+    const userFavorites = await model.loadUserFavorites(uid);
+
+    let data;
+    if ((hash === "#recent") | !hash) {
+      data = await model.loadPost("recent");
+    }
+    if (hash === "#trending") {
+      data = await model.loadPost("trending");
+    }
+    if (hash === "#my") {
+      data = await model.loadPost("my", uid);
+    }
+    if (hash === "#likes") {
+      data = await model.loadPost("likes", uid, userFavorites);
+    }
 
     // 글마디 렌더링 (VIEW)
-    const userFavorites = await model.loadUserFavorites(uid);
+
     if (data) {
       recentPostsView.render(data, userFavorites, uid);
     }
@@ -278,7 +295,7 @@ const controlDelete = async function (postId) {
       // 글마디 삭제 요청
       await model.deletePost(postId, token);
       // 최근 글마디 reload
-      await controlLoadRecentPosts();
+      await controlLoadPosts(location.hash);
     } catch (err) {
       recentPostsView.renderError(err);
     }
@@ -315,19 +332,30 @@ const controlLike = async function (postId, type) {
   }
 };
 
+///////////////////// 글마디 FILTER 관련 /////////////////////
+const controlFilter = async function (hash) {
+  await controlLoadPosts(hash);
+};
+
 ///////////////////// INIT /////////////////////
 
 /**
- * @description 로그인 정보 변경(새로고침 포함) 감지 시 Auth 정보 초기화 및 글마디 로드
+ * @description 로그인 정보 변경(새로고침 포함) 감지 시 Auth 정보 초기화
  */
 const init = async function (user) {
   await controlUserStateChange(user);
 
-  // 추후 href에 따라 분기하여 로드(인기, 최근, 내 글마디 등)
-  await controlLoadRecentPosts();
+  // 글마디 filtering 관련 handlers
+  // 로그인 정보가 확인된 후에 실행되어야해서 여기 위치함
+  recentPostsView.addHandlerFilter(controlFilter);
+
+  controlLoadPosts(location.hash);
 };
 
 ///////////////////// 실행 스크립트 /////////////////////
+
+// 로그인 정보 불러오기
+auth.onUserStateChange(init);
 
 // 인증 관련 handlers 등록
 registerView.addHandlerCreateAccount(controlCreateAccount);
@@ -335,9 +363,6 @@ loginView.addHandlerSignIn(controlSignIn);
 loginView.addHandlerSignOut(controlSignOut);
 loginView.addHandlerSignInWithGoogle(controlSignInWithGoogle);
 resetPasswordView.addHandlerResetPassword(controlResetPassword);
-
-// 로그인 정보 불러오기
-auth.onUserStateChange(init);
 
 // 글마디 CRUD 관련 handlers
 uploadView.addHandlerUpload(controlUpload);

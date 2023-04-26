@@ -91,7 +91,48 @@
 }
 
 .collection__container {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+}
+
+.filters__container {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  height: 3.64rem;
+  border-bottom: solid 1px #c4c4c4;
+
+  .selected {
+    border-bottom: 3px solid;
+  }
+
+  .disabled {
+    pointer-events: none;
+  }
+
+  & .btn {
+    height: 100%;
+    padding: 0 1.2rem;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      border-bottom: 3px solid;
+    }
+
+    a {
+      padding: 1rem 0;
+      text-decoration: none;
+      color: #333333;
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.posts__container {
+  display: flex;
+  flex-direction: column;
 }
 
 // 글마디 리스트 element

@@ -58,11 +58,42 @@ export const uploadPost = async function (formData, uid, token, postId = null) {
 
 /**
  * @description 글마디 리스트 불러오기
- * @returns response data
+ * @param { string } type recent | trending | my | likes
+ * @param { string } uid 유저 id
+ * @param { string[] } userFavorites 유저가 좋아요한 글마디 id 리스트
+ * @returns 글마디 리스트
  */
-export const loadRecentPost = async function () {
+export const loadPost = async function (
+  type = "recent",
+  uid = null,
+  userFavorites = null
+) {
   try {
-    const ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+    let ret;
+    if (type === "recent") {
+      ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+      ret = Object.entries(ret).reverse();
+    }
+    if (type === "trending") {
+      ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+      ret = Object.entries(ret).sort(function (a, b) {
+        return b[1].likesNum - a[1].likesNum;
+      });
+    }
+    if (type === "my") {
+      ret = await AJAX(
+        `${API_URL_POSTS}.json?orderBy="uid"&equalTo="${uid}"`,
+        "GET"
+      );
+      ret = Object.entries(ret).reverse();
+    }
+    if (type === "likes") {
+      ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+      ret = Object.entries(ret).filter((entry) =>
+        userFavorites.includes(entry[0])
+      );
+      ret.reverse();
+    }
     return ret;
   } catch (err) {
     throw err;

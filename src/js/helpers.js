@@ -10,6 +10,7 @@ const timeout = function (s) {
 };
 
 /**
+ * @description 주어진 url에 주어진 type의 REST 요청을 전달
  * @param { String } url
  * @param { String } type : AJAX 요청 타입 (GET | POST | PUT | PATCH | DELETE)
  * @param { String | Object} uploadData
