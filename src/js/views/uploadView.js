@@ -103,6 +103,14 @@ class UploadView extends View {
   }
 
   /**
+   * @description 업로드 모달 윈도우 닫기 버튼 눌렀을 때 실행할 핸들러(editPostId 초기화) 등록
+   * @param { Function } handler
+   */
+  addHandlerUploadModalClose(handler) {
+    this.#btnClose.addEventListener('click', handler(null));
+  }
+
+  /**
    * @description 글마디 수정을 위한 모달 창 열기
    * @param { Object } 수정할 글마디 데이터
    */

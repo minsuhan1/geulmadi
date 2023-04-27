@@ -7,6 +7,7 @@ import uploadView from "./views/uploadView.js";
 import * as model from "./model.js";
 import auth from "./auth.js";
 import recentPostsView from "./views/recentPostsView.js";
+import { setPersistence } from "firebase/auth";
 
 if (module.hot) {
   module.hot.accept();
@@ -235,7 +236,7 @@ const controlUpload = async function (formData) {
     uploadView.renderSuccessMessage("글마디가 등록되었어요!");
 
     // 수정 후 editPostId 초기화
-    editPostId = null;
+    setEditPostId(null);
     // 등록 창 닫고 최근 글마디 reload
     uploadView.closeModal();
     await controlLoadPosts("#recent");
@@ -274,7 +275,6 @@ const controlLoadPosts = async function (hash) {
     }
 
     // 글마디 렌더링 (VIEW)
-
     if (data) {
       recentPostsView.render(data, userFavorites, uid);
     }
@@ -310,7 +310,7 @@ const controlEdit = async function (postId) {
   try {
     // 수정될 postId를 저장
     // 실제 수정 작업은 controlUpload에서 editPostId가 존재하는지에 따라 진행
-    editPostId = postId;
+    setEditPostId(postId);
     // 수정할 글마디 데이터를 받아서 수정 창에 전달만 해주면 됨
     const postData = await model.loadSinglePost(postId);
     uploadView.openEditModal(postData);
@@ -330,6 +330,10 @@ const controlLike = async function (postId, type) {
   } catch (err) {
     recentPostsView.renderError(err);
   }
+};
+
+const setEditPostId = function (id) {
+  editPostId = id;
 };
 
 ///////////////////// 글마디 FILTER 관련 /////////////////////
@@ -366,6 +370,7 @@ resetPasswordView.addHandlerResetPassword(controlResetPassword);
 
 // 글마디 CRUD 관련 handlers
 uploadView.addHandlerUpload(controlUpload);
+uploadView.addHandlerUploadModalClose(setEditPostId);
 recentPostsView.addHandlerBtnLike(controlLike);
 recentPostsView.addHandlerBtnDelete(controlDelete);
 recentPostsView.addHandlerBtnEdit(controlEdit);

@@ -59,8 +59,8 @@ export const uploadPost = async function (formData, uid, token, postId = null) {
 /**
  * @description 글마디 리스트 불러오기
  * @param { string } type recent | trending | my | likes
- * @param { string } uid 유저 id
- * @param { string[] } userFavorites 유저가 좋아요한 글마디 id 리스트
+ * @param { string } uid 유저 id (default null)
+ * @param { string[] } userFavorites 유저가 좋아요한 글마디 id 리스트 (default null)
  * @returns 글마디 리스트
  */
 export const loadPost = async function (
