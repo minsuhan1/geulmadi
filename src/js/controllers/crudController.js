@@ -63,17 +63,28 @@ export const controlLoadPosts = async function (hash) {
       data = await model.loadPost("trending");
     }
     if (hash === "#my") {
-      data = await model.loadPost("my", uid);
+      if (!uid) {
+        postListView.renderInfoMessage("로그인이 필요합니다");
+      } else {
+        data = await model.loadPost("my", uid);
+      }
     }
     if (hash === "#likes") {
-      data = await model.loadPost("likes", uid, userFavorites);
+      if (!uid) {
+        postListView.renderInfoMessage("로그인이 필요합니다");
+      } else {
+        data = await model.loadPost("likes", uid, userFavorites);
+      }
     }
 
     // 글마디 렌더링 (VIEW)
-    if (data) {
+    if (data.length > 0) {
       postListView.render(data, userFavorites, uid);
+      postListView.toggleSpinner();
+    } else {
+      postListView.toggleSpinner();
+      postListView.showEmptyBox();
     }
-    postListView.toggleSpinner();
   } catch (err) {
     postListView.toggleSpinner();
     postListView.renderError(err);

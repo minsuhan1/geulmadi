@@ -228,6 +228,19 @@ class PostListView extends View {
       .querySelector('.spinner__container')
       .classList.toggle('hidden');
   }
+
+  /**
+   * @description 빈 목록 아이콘 표시
+   */
+  showEmptyBox() {
+    const markup = `
+      <div class="empty">
+        <img src="assets/img/empty-box.png" width="20%" alt="empty-box"/>
+        <div>아무것도 없네요!</div>
+      </div>
+    `;
+    this.#container.insertAdjacentHTML('afterbegin', markup);
+  }
 }
 
 export default new PostListView();

@@ -133,6 +133,23 @@
 .posts__container {
   display: flex;
   flex-direction: column;
+
+  // 아무것도 없네요 그림
+  .empty {
+    width: 100%;
+    padding-top: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    div {
+      margin-top: 1rem;
+      font-weight: 600;
+      color: rgb(114, 180, 255);
+      font-size: 1.4rem;
+    }
+  }
 }
 
 // 글마디 리스트 element
