@@ -19,7 +19,6 @@ let editPostId;
 
 ///////////// AUTH ///////////////
 /**
- *
  * @param { Array } formData registerView가 제공하는 form data
  * @description 회원가입 폼으로부터 입력받은 데이터를 auth.js에 정의된 Firebase 기반 회원가입 함수에 전달하여 회원가입을 진행함
  *
@@ -190,8 +189,7 @@ const controlSignOut = async function () {
 };
 
 /**
- *
- * @param { Object } user Firebase Auth 유저 객체
+ * @param { Object } userCredential user Firebase Auth 유저 객체
  * @description 로그인 상태 변경 감지 후 유저id, 토큰 등을 받고 헤더 렌더링
  */
 const controlUserStateChange = async function (user) {
@@ -216,7 +214,7 @@ const controlUserStateChange = async function (user) {
 ///////////// CRUD ///////////////
 
 /**
- * @param { Object } uploadView로부터 받은 formData
+ * @param { Object } formData uploadView로부터 받은 formData
  * @description 업로드 폼 제출버튼 클릭 감지 시 업로드 작업을 실행할 핸들러
  */
 const controlUpload = async function (formData) {
@@ -248,6 +246,7 @@ const controlUpload = async function (formData) {
 
 /**
  * @description 글마디 데이터를 불러와서 렌더링
+ * @param { string } hash 주소창 hash값
  */
 const controlLoadPosts = async function (hash) {
   try {
@@ -332,11 +331,19 @@ const controlLike = async function (postId, type) {
   }
 };
 
+/**
+ * @description 수정중인 포스트 id값 초기화
+ * @param { string | null } id
+ */
 const setEditPostId = function (id) {
   editPostId = id;
 };
 
-///////////////////// 글마디 FILTER 관련 /////////////////////
+///////////////// 글마디 FILTER 관련 /////////////////
+/**
+ * @description 필터 버튼 클릭시 주소창의 hash값을 글마디 로드 메서드에 전달
+ * @param { string } hash 주소창 hash값
+ */
 const controlFilter = async function (hash) {
   await controlLoadPosts(hash);
 };
@@ -345,6 +352,7 @@ const controlFilter = async function (hash) {
 
 /**
  * @description 로그인 정보 변경(새로고침 포함) 감지 시 Auth 정보 초기화
+ * @param { Object } userCredential 유저 정보 객체
  */
 const init = async function (user) {
   await controlUserStateChange(user);

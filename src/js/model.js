@@ -72,10 +72,12 @@ export const loadPost = async function (
     let ret;
     if (type === "recent") {
       ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+      // 최신순 정렬
       ret = Object.entries(ret).reverse();
     }
     if (type === "trending") {
       ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+      // 좋아요순 정렬
       ret = Object.entries(ret).sort(function (a, b) {
         return b[1].likesNum - a[1].likesNum;
       });
@@ -85,13 +87,18 @@ export const loadPost = async function (
         `${API_URL_POSTS}.json?orderBy="uid"&equalTo="${uid}"`,
         "GET"
       );
-      ret = Object.entries(ret).reverse();
+      // 최신순 정렬
+      ret = Object.entries(ret).sort(function (a, b) {
+        return b[1].timestamp - a[1].timestamp;
+      });
     }
     if (type === "likes") {
       ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+      // 좋아요한 글만 필터링
       ret = Object.entries(ret).filter((entry) =>
         userFavorites.includes(entry[0])
       );
+      // 최신글순 정렬
       ret.reverse();
     }
     return ret;
