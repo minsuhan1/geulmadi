@@ -107,7 +107,9 @@ class UploadView extends View {
    * @param { Function } handler
    */
   addHandlerUploadModalClose(handler) {
-    this.#btnClose.addEventListener('click', handler(null));
+    this.#btnClose.addEventListener('click', () => {
+      handler(null);
+    });
   }
 
   /**

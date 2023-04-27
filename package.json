@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "parcel collection.html",
-    "build": "parcel build index.html"
+    "build": "parcel build collection.html"
   },
   "keywords": [],
   "author": "Minsu Han",
