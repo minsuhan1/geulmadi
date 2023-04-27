@@ -14,6 +14,32 @@ if (module.hot) {
 export let uid;
 export let token;
 
+/**
+ * @description 오류코드를 오류 메시지로 변경하여 리턴
+ * @param { string } errCode 오류코드
+ * @returns { string } message 오류 메시지
+ */
+const convertErrorCodeToMessage = function (errCode) {
+  switch (errCode) {
+    case "auth/wrong-password":
+      return "이메일 혹은 비밀번호가 일치하지 않습니다.";
+    case "auth/user-not-found":
+      return "존재하지 않는 계정입니다.";
+    case "auth/email-already-in-use":
+      return "이미 사용 중인 이메일입니다.";
+    case "auth/weak-password":
+      return "비밀번호는 6글자 이상이어야 합니다.";
+    case "auth/network-request-failed":
+      return "네트워크 연결에 실패하였습니다.";
+    case "auth/invalid-email":
+      return "잘못된 이메일 형식입니다.";
+    case "auth/internal-error":
+      return "잘못된 요청입니다.";
+    default:
+      return "오류가 발생했습니다. 다시 시도해주세요";
+  }
+};
+
 ///////////// AUTH ///////////////
 /**
  * @param { Array } formData registerView가 제공하는 form data
@@ -36,25 +62,7 @@ const controlCreateAccount = async function (formData) {
     // 로딩 스피너 제거
     registerView.toggleButtonSpinner();
     // 오류 코드에 따른 메시지 표시
-    switch (err.code) {
-      case "auth/email-already-in-use":
-        registerView.renderError("이미 사용 중인 이메일입니다.");
-        return;
-      case "auth/weak-password":
-        registerView.renderError("비밀번호는 6글자 이상이어야 합니다.");
-        return;
-      case "auth/network-request-failed":
-        registerView.renderError("네트워크 연결에 실패하였습니다.");
-        return;
-      case "auth/invalid-email":
-        registerView.renderError("잘못된 이메일 형식입니다.");
-        return;
-      case "auth/internal-error":
-        registerView.renderError("잘못된 요청입니다.");
-        return;
-      default:
-        registerView.renderError("회원가입에 실패 하였습니다.");
-    }
+    registerView.renderError(convertErrorCodeToMessage(err.code));
   }
 };
 
@@ -81,25 +89,7 @@ const controlSignIn = async function (formData) {
     // 로딩 스피너 제거
     loginView.toggleButtonSpinner();
     // 오류코드에 따른 메시지 표시
-    switch (err.code) {
-      case "auth/user-not-found" || "auth/wrong-password":
-        loginView.renderError("이메일 혹은 비밀번호가 일치하지 않습니다.");
-        return;
-      case "auth/weak-password":
-        loginView.renderError("비밀번호는 6글자 이상이어야 합니다.");
-        return;
-      case "auth/network-request-failed":
-        loginView.renderError("네트워크 연결에 실패하였습니다.");
-        return;
-      case "auth/invalid-email":
-        loginView.renderError("잘못된 이메일 형식입니다.");
-        return;
-      case "auth/internal-error":
-        loginView.renderError("잘못된 요청입니다.");
-        return;
-      default:
-        loginView.renderError("로그인에 실패하였습니다.");
-    }
+    loginView.renderError(convertErrorCodeToMessage(err.code));
   }
 };
 
@@ -118,19 +108,7 @@ const controlSignInWithGoogle = async function (formData) {
     loginView.closeModal();
   } catch (err) {
     // 오류코드에 따른 메시지 표시
-    switch (err.code) {
-      case "auth/popup-closed-by-user":
-        // 팝업창 닫은 경우는 따로 메시지 표시 X
-        return;
-      case "auth/network-request-failed":
-        loginView.renderError("네트워크 연결에 실패하였습니다.");
-        return;
-      case "auth/internal-error":
-        loginView.renderError("잘못된 요청입니다.");
-        return;
-      default:
-        loginView.renderError("로그인에 실패하였습니다.");
-    }
+    loginView.renderError(convertErrorCodeToMessage(err.code));
   }
 };
 
@@ -156,19 +134,7 @@ const controlResetPassword = async function (email) {
     // 로딩 스피너 제거
     resetPasswordView.toggleButtonSpinner();
     // 오류코드에 따른 메시지 표시
-    switch (err.code) {
-      case "auth/user-not-found":
-        resetPasswordView.renderError("존재하지 않는 계정입니다.");
-        return;
-      case "auth/network-request-failed":
-        resetPasswordView.renderError("네트워크 연결에 실패하였습니다.");
-        return;
-      case "auth/internal-error":
-        resetPasswordView.renderError("잘못된 요청입니다.");
-        return;
-      default:
-        resetPasswordView.renderError("링크 전송에 실패하였습니다.");
-    }
+    resetPasswordView.renderError(convertErrorCodeToMessage(err.code));
   }
 };
 
