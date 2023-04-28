@@ -15,32 +15,30 @@ class PostListView extends View {
    * @description 필터를 클릭하거나 페이지 새로고침 시 필터 활성화 표시
    */
   #addFilterListeners() {
-    // 필터 링크 클릭 시 해당 필터 활성화 표시
-    this.#filters_container.addEventListener('click', e => {
-      if (e.target.nodeName === 'A') {
+    // 필터 변경 시 hash 값에 따라 활성화 필터 표시
+    ['load', 'hashchange'].forEach(ev =>
+      window.addEventListener(ev, () => {
         // 이전 활성화된 버튼의 bottom border 제거
         const btnActivated = this.#filters_container.querySelector('.selected');
         btnActivated?.classList.remove('selected', 'disabled');
 
-        // 클릭한 버튼의 bottom border 활성화
-        e.target.closest('.btn').classList.add('selected', 'disabled');
-      }
-    });
-
-    // 페이지 새로고침(load) 시 href 값에 따라 활성화 필터 표시
-    window.addEventListener('load', () => {
-      if (location.hash) {
-        const btn = this.#filters_container
-          .querySelector(`a[href='${location.hash}']`)
-          .closest('.btn');
-        btn.classList.add('selected', 'disabled');
-      } else {
-        const btn = this.#filters_container
-          .querySelector("a[href='#recent']")
-          .closest('.btn');
-        btn.classList.add('selected', 'disabled');
-      }
-    });
+        // 현재 필터 버튼에 bottom border 추가
+        if (location.hash) {
+          if (location.hash.includes('search')) return;
+          // 최신/인기/내 글마디/좋아요
+          const btn = this.#filters_container
+            .querySelector(`a[href='${location.hash}']`)
+            .closest('.btn');
+          btn.classList.add('selected', 'disabled');
+        } else {
+          // 최신 (해시값 없을때를 포함)
+          const btn = this.#filters_container
+            .querySelector("a[href='#recent']")
+            .closest('.btn');
+          btn.classList.add('selected', 'disabled');
+        }
+      })
+    );
   }
 
   /**

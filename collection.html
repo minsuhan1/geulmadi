@@ -41,15 +41,19 @@
       </section>
 
       <div class="search__container">
-        <input placeholder="search" class="search__input">
-        
-      </input>
-      <button class="search__button">
-        Search
-      </button>
-    </div>
+        <input placeholder="search"></input>
+        <select name="types" id="type-select">
+          <option value="body">본문</option>
+          <option value="reference">제목</option>
+          <option value="author">작가/가수</option>
+          <option value="tags">태그</option>
+        </select>
+        <button>
+          검색
+        </button>
+      </div>
     
-    <section class="collection__section">
+      <section class="collection__section">
         <div class="popular__container">
           <div class="label__popular__tags">Popular tags</div>
           <div class="popular__tags__container">

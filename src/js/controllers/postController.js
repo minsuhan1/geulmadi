@@ -4,6 +4,7 @@ import * as model from "../model/model.js";
 import { uid, token } from "./loginController.js";
 import uploadView from "../views/uploadView.js";
 import postListView from "../views/postListView.js";
+import searchView from "../views/searchView.js";
 
 let editPostId;
 
@@ -75,6 +76,13 @@ export const controlLoadPosts = async function (hash) {
       } else {
         data = await model.loadPost("likes", uid, userFavorites);
       }
+    }
+    if (hash.startsWith("#search")) {
+      const query = decodeURI(hash); // 주소 한글 디코딩
+      const type = query.slice(13, query.indexOf("&")); // 검색 기준
+      const keyword = query.slice(query.lastIndexOf("=") + 1); // 키워드
+
+      data = await model.loadSearchResults(type, keyword);
     }
 
     // 글마디 렌더링 (VIEW)

@@ -122,6 +122,32 @@ export const loadSinglePost = async function (postId) {
 };
 
 /**
+ * @description 주어진 분류 기준과 검색 키워드를 가지고 필터링 수행 및 결과 리턴
+ * @param {*} type 분류 기준
+ * @param {*} keyword 검색 키워드
+ * @returns 검색 결과
+ */
+export const loadSearchResults = async function (type, keyword) {
+  try {
+    let ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+
+    if (type !== "tags") {
+      ret = Object.entries(ret).filter((entry) =>
+        entry[1][`${type}`].toLowerCase().includes(keyword)
+      );
+    } else {
+      ret = Object.entries(ret).filter((entry) =>
+        entry[1][`${type}`].map((t) => t.toLowerCase()).includes(keyword)
+      );
+    }
+
+    return ret;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
  * @description 글마디 삭제하기
  * @param { string } postId : 글마디 id
  * @param { string } token : 유저 idToken

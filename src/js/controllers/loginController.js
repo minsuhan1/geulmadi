@@ -1,6 +1,6 @@
 "use strict";
 
-import { controlLoadPosts, controlFilter } from "./crudController.js";
+import { controlLoadPosts, controlFilter } from "./postController.js";
 import auth from "../auth.js";
 import loginView from "../views/loginView.js";
 import registerView from "../views/registerView.js";
