@@ -54,6 +54,7 @@
     border: #d6d0c4 1px solid;
     color: #333333;
     resize: none;
+
     &:focus {
       box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       border-color: #b9ad99;
@@ -64,6 +65,12 @@
   select {
     border: #d6d0c4 1px solid;
     border-radius: 3px;
+
+    &:focus {
+      box-shadow: 0 0 4px rgb(185 173 153 / 50%);
+      border-color: #b9ad99;
+      outline: 0px;
+    }
   }
 
   button {

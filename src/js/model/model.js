@@ -133,11 +133,13 @@ export const loadSearchResults = async function (type, keyword) {
 
     if (type !== "tags") {
       ret = Object.entries(ret).filter((entry) =>
-        entry[1][`${type}`].toLowerCase().includes(keyword)
+        entry[1][`${type}`].toLowerCase().includes(keyword.toLowerCase())
       );
     } else {
       ret = Object.entries(ret).filter((entry) =>
-        entry[1][`${type}`].map((t) => t.toLowerCase()).includes(keyword)
+        entry[1][`${type}`]
+          .map((t) => t.toLowerCase())
+          .includes(keyword.toLowerCase())
       );
     }
 
