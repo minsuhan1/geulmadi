@@ -5,6 +5,7 @@ import { uid, token } from "./loginController.js";
 import uploadView from "../views/uploadView.js";
 import postListView from "../views/postListView.js";
 import searchView from "../views/searchView.js";
+import popularView from "../views/popularView.js";
 
 let editPostId;
 
@@ -56,25 +57,31 @@ export const controlLoadPosts = async function (hash) {
     // 유저가 좋아요한 글마디
     const userFavorites = await model.loadUserFavorites(uid);
 
-    let data;
+    // 인기태그,작가 로드 프로미스
+    const promise_poptags = model.loadPopularTags();
+    const promise_popAuthors = model.loadPopularAuthors();
+
+    let promise_load, data, popTags, popAuthors;
     if ((hash === "#recent") | !hash) {
-      data = await model.loadPost("recent");
+      // data = await model.loadPost("recent");
+      // model.loadPopularTags();
+      promise_load = model.loadPost("recent");
     }
     if (hash === "#trending") {
-      data = await model.loadPost("trending");
+      promise_load = model.loadPost("trending");
     }
     if (hash === "#my") {
       if (!uid) {
         postListView.renderInfoMessage("로그인이 필요합니다");
       } else {
-        data = await model.loadPost("my", uid);
+        promise_load = model.loadPost("my", uid);
       }
     }
     if (hash === "#likes") {
       if (!uid) {
         postListView.renderInfoMessage("로그인이 필요합니다");
       } else {
-        data = await model.loadPost("likes", uid, userFavorites);
+        promise_load = model.loadPost("likes", uid, userFavorites);
       }
     }
     if (hash.startsWith("#search")) {
@@ -82,17 +89,34 @@ export const controlLoadPosts = async function (hash) {
       const type = query.slice(13, query.indexOf("&")); // 검색 기준
       const keyword = query.slice(query.lastIndexOf("=") + 1); // 키워드
 
-      data = await model.loadSearchResults(type, keyword);
+      promise_load = model.loadSearchResults(type, keyword);
     }
 
+    // 동시에 프로미스 실행
+    const promiseResults = await Promise.allSettled([
+      promise_poptags,
+      promise_popAuthors,
+      promise_load,
+    ]);
+
+    // 프로미스 결과 데이터 수집
+    popTags = promiseResults[0].value;
+    popAuthors = promiseResults[1].value;
+    data = promiseResults[2].value;
+
     // 글마디 렌더링 (VIEW)
-    if (data.length > 0) {
+    if (data?.length > 0) {
+      // 글마디
       postListView.render(data, userFavorites, uid);
       postListView.toggleSpinner();
     } else {
       postListView.toggleSpinner();
       postListView.showEmptyBox();
     }
+
+    // 인기태그/가수 렌더링
+    popularView.render(popTags, "tag");
+    popularView.render(popAuthors, "author");
   } catch (err) {
     postListView.toggleSpinner();
     postListView.renderError(err);

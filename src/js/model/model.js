@@ -20,7 +20,7 @@ export const uploadPost = async function (formData, uid, token, postId = null) {
         reference: formData[1],
         author: formData[2],
         body: formData[3].replaceAll("\n", "<br>"),
-        tags: formData[4].split(","),
+        tags: formData[4].split(",").map((t) => t.trim()),
       };
 
       // 수정(PATCH) 요청
@@ -229,5 +229,65 @@ export const loadUserFavorites = async function (uid) {
     return ret ? [...Object.keys(ret)] : null;
   } catch (err) {
     throw err;
+  }
+};
+
+/* helper function */
+const sortFreqMap = function (freqMap) {
+  // 빈도수 내림차순 정렬
+  freqMap = Object.entries(freqMap).sort((a, b) => b[1] - a[1]);
+
+  // 상위 20개를 추출
+  if (freqMap.length >= 20) {
+    return freqMap.slice(0, 20).map((e) => e[0]);
+  } else {
+    return freqMap.map((e) => e[0]);
+  }
+};
+
+/**
+ * @description 인기 태그 상위 20개 로드
+ * @returns { string[] } 인기 태그 데이터
+ */
+export const loadPopularTags = async function () {
+  try {
+    let ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+
+    // 각 태그의 빈도수 계산
+    let freqMap = {};
+    Object.entries(ret).forEach((entry) => {
+      entry[1].tags.forEach((tag) => {
+        if (tag.length < 1) return;
+        if (!freqMap[tag]) freqMap[tag] = 0;
+        freqMap[tag] += 1;
+      });
+    });
+
+    return sortFreqMap(freqMap);
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+/**
+ * @description 인기 작가/가수 상위 20개 로드
+ * @returns { string[] } 인기 작가/가수 데이터
+ */
+export const loadPopularAuthors = async function () {
+  try {
+    let ret = await AJAX(`${API_URL_POSTS}.json`, "GET");
+
+    // 각 작가/가수의 빈도수 계산
+    let freqMap = {};
+    Object.entries(ret).forEach((entry) => {
+      const author = entry[1].author;
+      if (author.length < 1) return;
+      if (!freqMap[author]) freqMap[author] = 0;
+      freqMap[author] += 1;
+    });
+
+    return sortFreqMap(freqMap);
+  } catch (err) {
+    throw new Error(err);
   }
 };
