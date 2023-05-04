@@ -11,6 +11,7 @@ class CardView extends View {
     this.#renderCard();
     this.#downloadImage();
     this.#changeBgColor();
+    this.#shareImage();
   }
 
   /* 단일 글마디 카드 렌더링 */
@@ -33,14 +34,19 @@ class CardView extends View {
               </p>
               <h2>${reference}</h2>
               <div class="tabs">
-                <div class="palette">
+                <div class="palette" title="배경색 변경">
                   <div class="material-icons-outlined">
                   auto_fix_high 
                   </div>
                 </div>
-                <div class="download">
+                <div class="download" title="사진으로 저장">
                   <div class="material-icons-outlined">
                   file_download  
+                  </div>
+                </div>
+                <div class="share" title="사진으로 공유">
+                  <div class="material-icons-outlined">
+                  send
                   </div>
                 </div>
               </div>
@@ -56,7 +62,7 @@ class CardView extends View {
   }
 
   // 이미지 다운로드 (html-to-image library)
-  #downloadImage() {
+  async #downloadImage() {
     document.querySelector('body').addEventListener('click', e => {
       if (e.target.closest('.download')) {
         // 카드 DOM을 png로 다운로드 (다운로드 버튼 제외)
@@ -65,7 +71,48 @@ class CardView extends View {
           .toPng(node, {
             filter: node => node.className !== 'tabs',
           })
-          .then(dataUrl => download(dataUrl, 'geulmadi.png'))
+          .then(async dataUrl => {
+            if (navigator.share) {
+              const blob = await (await fetch(dataUrl)).blob();
+              const file = new File([blob], 'geulmadi.png', {
+                type: 'image/png',
+                lastModified: new Date(),
+              });
+              navigator.share({ files: [file] }).then(() => {
+                alert('공유하기 성공');
+              });
+            }
+            console.log(dataUrl);
+            download(dataUrl, 'geulmadi.png');
+          })
+          .catch(e => {});
+      }
+    });
+  }
+
+  /* 사진 공유하기 */
+  async #shareImage() {
+    document.querySelector('body').addEventListener('click', e => {
+      if (e.target.closest('.share')) {
+        // 1. 카드 DOM을 png dataUrl로 변환
+        // 2. dataUrl을 blob 객체로 변환
+        // 3. blob 객체를 File 객체로 변환
+        // 4. navigator.share(file객체)로 공유
+        const node = document.querySelector('.card');
+        htmlToImage
+          .toPng(node, {
+            filter: node => node.className !== 'tabs',
+          })
+          .then(async dataUrl => {
+            if (navigator.share) {
+              const blob = await (await fetch(dataUrl)).blob();
+              const file = new File([blob], 'geulmadi.png', {
+                type: 'image/png',
+                lastModified: new Date(),
+              });
+              navigator.share({ files: [file] }).then(() => {});
+            }
+          })
           .catch(e => {});
       }
     });
@@ -85,7 +132,7 @@ class CardView extends View {
     });
   }
 
-  // 랜덤 컬러(rgb값 50~200)
+  // 랜덤 컬러 (rgb값 50~200)
   #getRandomColor() {
     let rgb = '';
     rgb += (Math.floor(Math.random() * 150 + 1) + 50).toString(16); // R to hex
