@@ -170,7 +170,9 @@ class PostListView extends View {
       markup += `
         <div class="blockquote__list__child" data-id="${id}">
           <blockquote class="blockquote__${post.type}">
+            <div class="body">
             ${post.body}
+            </div>
             <span>
               <div class="reference">
                 &ndash; ${post.author}, 《${post.reference}》
@@ -186,7 +188,7 @@ class PostListView extends View {
               </span>
             </div>`
                   : ''
-              }              
+              }            
             </span>
           </blockquote>
           <div class="blockquote__list__child__like__area">

@@ -6,6 +6,7 @@ import uploadView from "../views/uploadView.js";
 import postListView from "../views/postListView.js";
 import searchView from "../views/searchView.js";
 import popularView from "../views/popularView.js";
+import cardView from "../views/cardView.js";
 
 let editPostId;
 

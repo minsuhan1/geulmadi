@@ -11,14 +11,16 @@
   "license": "ISC",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.3",
+    "downloadjs": "^1.4.7",
     "firebase": "^9.19.1",
+    "html-to-image": "^1.11.11",
     "parcel-bundler": "^1.12.5",
     "parcel-plugin-static-files-copy": "^2.6.0",
     "regenerator-runtime": "^0.13.11",
     "sass": "^1.61.0",
     "sweetalert2": "^11.7.3"
   },
-  "staticFiles" : {
-    "staticPath" : "static"
+  "staticFiles": {
+    "staticPath": "static"
   }
 }

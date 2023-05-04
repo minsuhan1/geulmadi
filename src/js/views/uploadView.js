@@ -6,11 +6,14 @@ class UploadView extends View {
   #form = this.#modal.querySelector('.form__modal');
   #btnClose = this.#modal.querySelector('.modal__close__btn');
   #btnSubmit = this.#form.querySelector('.submit_btn');
+  #nowByte = this.#form.querySelector('.nowbyte');
 
   constructor() {
     super();
     this.#addHandlerShowModal();
     this.#addHandlerSelectType();
+    this.#addMaxLineEventListener();
+    this.#addMaxByteEventListener();
   }
 
   /**
@@ -43,6 +46,57 @@ class UploadView extends View {
       );
   }
 
+  /* textarea byte수 제한 */
+  #addMaxByteEventListener() {
+    const textarea = this.#form.querySelector('textarea');
+
+    textarea.addEventListener('keyup', e => {
+      const maxByte = 600;
+      const text_val = textarea.value;
+      const text_len = this.#getBytes(text_val);
+
+      this.#nowByte.textContent = `${text_len}/600bytes`;
+
+      if (text_len > maxByte) {
+        textarea.value = text_val.slice(0, -1);
+        this.#nowByte.textContent = `600/600bytes`;
+      }
+    });
+  }
+
+  #getBytes(str) {
+    let character;
+    let charBytes = 0;
+
+    for (let i = 0; i < str.length; i += 1) {
+      character = str.charAt(i);
+
+      // 한글 = 2byte
+      if (escape(character).length > 4) charBytes += 2;
+      else charBytes += 1;
+    }
+
+    return charBytes;
+  }
+
+  /* textarea 줄 수 제한 */
+  #addMaxLineEventListener() {
+    const textarea = this.#form.querySelector('textarea');
+
+    textarea.addEventListener('keydown', e => {
+      // textarea에 입력된 줄 수
+      let numOfLines = (textarea.value.match(/\n/g) || []).length + 1;
+      let maxRows = textarea.rows;
+
+      if (e.key === 'Enter' && numOfLines >= maxRows) {
+        textarea.value = textarea.value
+          .split('\n')
+          .slice(0, maxRows)
+          .join('\n');
+      }
+    });
+  }
+
   /**
    * @description 글마디 타입에 따라 폼 양식 변경
    * @param { String } type : 'phrase' | 'lyric'
@@ -57,7 +111,8 @@ class UploadView extends View {
       inputs[0].placeholder = '책 제목';
       labels[2].textContent = '누가 쓴 책인가요?';
       inputs[1].placeholder = '작가 이름';
-      textarea.placeholder = '공유하고 싶은 구절을 입력해주세요';
+      textarea.placeholder =
+        '공유하고 싶은 구절을 입력해주세요 \n(10줄, 300자 이내)';
     }
 
     if (type === 'lyric') {
@@ -65,7 +120,8 @@ class UploadView extends View {
       inputs[0].placeholder = '노래 제목';
       labels[2].textContent = '누구의 노래인가요?';
       inputs[1].placeholder = '가수 이름';
-      textarea.placeholder = '공유하고 싶은 가사를 입력해주세요';
+      textarea.placeholder =
+        '공유하고 싶은 가사를 입력해주세요 \n(10줄, 300자 이내)';
     }
   }
 
@@ -74,6 +130,7 @@ class UploadView extends View {
    */
   #toggleModal() {
     this.#form.reset();
+    this.#nowByte.textContent = `0/600bytes`;
     // 양식 기본값으로 변경
     this.#renderPlaceHolderAsType('phrase');
     this.#modal.classList.toggle('hidden');

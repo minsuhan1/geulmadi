@@ -1,0 +1,82 @@
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.card {
+  box-shadow: 20px 50px 100px rgba(0, 0, 0, 0.5);
+
+  .content {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 35rem;
+    height: 35rem;
+    padding: 5rem;
+
+    color: #f2f2f2;
+    background: linear-gradient(135deg, #e2a9e5 15%, #2b94e5 100%);
+    // transition: all 0.5s ease-in;
+
+    p {
+      text-align: center;
+      margin: auto 0;
+      font-size: 1.6rem;
+      position: relative;
+      // workd-break : 아시아, 비아시아 언어의 줄 바꿈을 모두 제어
+      // keep-all : 단어 기준으로 줄 바꿈
+      word-break: keep-all;
+    }
+
+    p::before {
+      content: "\201C";
+      position: absolute;
+      top: -4rem;
+      left: -3rem;
+      font-size: 8rem;
+      opacity: 0.2;
+    }
+
+    p::after {
+      content: "\201D";
+      position: absolute;
+      bottom: -7rem;
+      right: -3rem;
+      font-size: 8rem;
+      opacity: 0.2;
+      filter: invert(1);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      position: absolute;
+      bottom: 4rem;
+      right: 4rem;
+    }
+  }
+}
+
+.tabs {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  & .material-icons-outlined {
+    color: #f2f2f2;
+    opacity: 0.5;
+  }
+
+  & .material-icons-outlined:hover {
+    cursor: pointer;
+    color: #fff;
+    opacity: 1;
+  }
+}

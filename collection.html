@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet">
-    <link rel="stylesheet" href="src/sass/main.scss" />
+    rel="stylesheet" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+    rel="stylesheet crossorigin="anonymous">
+    <link rel="stylesheet" href="src/sass/main.scss"  crossorigin="anonymous"/>
     <script defer type="module" src="src/js/controllers/loginController.js"></script>
     <!-- <script defer type="module" src="src/js/controllers/crudController.js"></script> -->
     <title>글마디 &ndash; 모아보기</title>
@@ -182,6 +184,7 @@
             <div class="form__sub__container">
               <label class="label">내용</label>
               <textarea name="body" placeholder="공유하고 싶은 구절을 입력하세요" rows="10" required></textarea>
+              <span class="nowbyte" style="text-align: end; display:block">0/600bytes</span>
             </div>
             <div class="form__sub__container">
               <label class="label">태그</label>
@@ -194,6 +197,6 @@
         </form>
       </div>
 
-      
-  </body>
+    </body>
 </html>
+  

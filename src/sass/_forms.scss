@@ -3,13 +3,12 @@
   display: flex;
   flex-direction: column;
   background-color: #fefefe;
-  margin: 0px auto;
+  margin: auto;
   border: 1px solid #888;
   width: 20%;
   padding: 30px;
   border-radius: 8px;
   position: relative;
-  margin-top: 6rem;
 }
 
 .form__title {
@@ -151,6 +150,7 @@
     input[type="radio"]:checked + label {
       background-color: #aea176;
       color: #fff;
+      color: #ffffff;
     }
   }
 
