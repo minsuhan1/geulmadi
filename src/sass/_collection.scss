@@ -9,10 +9,32 @@
 
 .label__popular__authors,
 .label__popular__tags {
-  font-size: 2rem;
-  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  font-size: 1.6rem;
+  padding: 7px 0;
   margin-bottom: 7px;
   border-bottom: 1px solid #c4c4c4;
+
+  & .expand {
+    display: none;
+  }
+
+  @include phone {
+    font-size: 1.4rem;
+    border-bottom: none;
+    margin-bottom: 0;
+    & .expand {
+      display: flex;
+    }
+  }
+}
+
+// 모바일 화면에서 태그 목록을 확장 전 가리기 위함
+.container__hide__responsive {
+  @include phone {
+    display: none;
+  }
 }
 
 .popular__tags__container,
@@ -47,7 +69,8 @@
   padding: 10px 0;
 
   input {
-    width: 65rem;
+    flex: 0 1 65rem;
+    min-width: 5rem;
     padding-left: 5px;
     background: #ffffff;
     border-radius: 3px;
@@ -79,6 +102,7 @@
     border-radius: 3px;
     padding: 2px 10px;
     cursor: pointer;
+    flex: 0 0 5rem;
 
     &:hover {
       color: #333333;
@@ -96,15 +120,41 @@
 }
 
 .popular__container {
-  flex-basis: 30rem;
-  flex-grow: 0;
-  flex-shrink: 0;
+  /* flex-grow: 1; flex-shrink: 1; flex-basis: 0%; */
+  flex: 1 1 0;
+  // display: none;
 }
 
 .collection__container {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex: 3 1 0;
+}
+
+@include phone {
+  .collection__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .popular__container {
+    /* flex-grow: 1; flex-shrink: 1; flex-basis: 0%; */
+    flex: 1 1 0;
+    padding: 0;
+  }
+
+  .collection__container {
+    display: flex;
+    flex-direction: column;
+    flex: 3 1 0;
+  }
+
+  .popular__tags__container,
+  .popular__authors__container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
 }
 
 .filters__container {
@@ -161,17 +211,39 @@
       font-size: 1.4rem;
     }
   }
+
+  @include phone {
+    margin-top: 0.7rem;
+  }
 }
 
 // 글마디 리스트 element
 .blockquote__list__child {
   display: flex;
-  padding: 10px 0 10px 10px;
+  padding: 10px 0 10px 0px;
+
+  @include phone {
+    flex-direction: column;
+    padding: 3px 0;
+
+    & .material-icons {
+      font-size: 1.6rem;
+    }
+  }
 
   &__like__area {
     align-items: center;
     text-align: center;
     margin: auto 15px;
+
+    @include phone {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.3rem;
+      margin: 0;
+    }
   }
 }
 
@@ -179,6 +251,11 @@
   font-size: 1.2rem;
   color: #c4c4c4;
   font-weight: 600;
+
+  @include phone {
+    font-size: 1.6rem;
+    font-weight: normal;
+  }
 
   &.favorite {
     color: #ff0000;
@@ -196,6 +273,10 @@ blockquote {
   line-height: 1.6;
   position: relative;
   background: #ededed;
+
+  @include phone {
+    padding: 1em 10px 1em 45px;
+  }
 
   span {
     display: flex;

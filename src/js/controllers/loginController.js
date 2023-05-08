@@ -13,6 +13,7 @@ if (module.hot) {
 
 export let uid;
 export let token;
+let handlerAdded = false;
 
 /**
  * @description 오류코드를 오류 메시지로 변경하여 리턴
@@ -185,8 +186,12 @@ const init = async function (user) {
 
   // 글마디 filtering 관련 handlers
   // 로그인 정보가 확인된 후에 실행되어야해서 여기 위치함
-  postListView.addHandlerFilter(controlFilter);
-
+  if (!handlerAdded) {
+    postListView.addHandlerFilter(controlFilter);
+    // 로드 핸들러는 한번만 등록되어야 함
+    // 중복 등록되면 로그인 정보 변경 횟수만큼 글마디가 중복 로드됨
+    handlerAdded = true;
+  }
   controlLoadPosts(location.hash);
 };
 

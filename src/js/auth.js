@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -13,16 +15,18 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 
+dotenv.config();
+
 class Auth {
   // Your web app's Firebase configuration
   #firebaseConfig = {
-    apiKey: "AIzaSyAK1J0LTcCjLAc0cReDd9YT3aIMLvXJszI",
-    authDomain: "geulmadi.firebaseapp.com",
-    databaseURL: "https://geulmadi-default-rtdb.firebaseio.com",
-    projectId: "geulmadi",
-    storageBucket: "geulmadi.appspot.com",
-    messagingSenderId: "413765648120",
-    appId: "1:413765648120:web:cd715421fce4e669e9450d",
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
   };
 
   // Initialize Firebase

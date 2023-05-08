@@ -17,6 +17,12 @@ class CardView extends View {
   /* 단일 글마디 카드 렌더링 */
   #renderCard() {
     this.#container.addEventListener('click', e => {
+      // 글마디 요소를 클릭하지 않은 경우 return
+      if (!e.target.closest('blockquote')) return;
+      // 수정/삭제 버튼 클릭한 경우 return
+      if (e.target.closest('.icons')) return;
+
+      // 클릭한 글마디 요소소
       const post = e.target.closest('.blockquote__list__child');
 
       if (post) {
@@ -61,7 +67,7 @@ class CardView extends View {
     });
   }
 
-  // 이미지 다운로드 (html-to-image library)
+  /* 이미지 다운로드 (html-to-image library) */
   async #downloadImage() {
     document.querySelector('body').addEventListener('click', e => {
       if (e.target.closest('.download')) {
@@ -71,18 +77,7 @@ class CardView extends View {
           .toPng(node, {
             filter: node => node.className !== 'tabs',
           })
-          .then(async dataUrl => {
-            if (navigator.share) {
-              const blob = await (await fetch(dataUrl)).blob();
-              const file = new File([blob], 'geulmadi.png', {
-                type: 'image/png',
-                lastModified: new Date(),
-              });
-              navigator.share({ files: [file] }).then(() => {
-                alert('공유하기 성공');
-              });
-            }
-            console.log(dataUrl);
+          .then(dataUrl => {
             download(dataUrl, 'geulmadi.png');
           })
           .catch(e => {});
@@ -105,6 +100,7 @@ class CardView extends View {
           })
           .then(async dataUrl => {
             if (navigator.share) {
+              // https://developer.mozilla.org/en-US/docs/Web/API/Response/blob
               const blob = await (await fetch(dataUrl)).blob();
               const file = new File([blob], 'geulmadi.png', {
                 type: 'image/png',

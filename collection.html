@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no, maximum-scale=1" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
     rel="stylesheet" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
@@ -57,10 +57,28 @@
     
       <section class="collection__section">
         <div class="popular__container">
-          <div class="label__popular__tags">Popular tags</div>
-          <div class="popular__tags__container"></div>
-          <div class="label__popular__authors">Popular authors</div>
-          <div class="popular__authors__container"></div>
+          <div class="label__popular__tags">
+            <span>
+              인기 태그
+            </span>
+            <span class="material-icons-outlined expand">
+              expand_more
+            </span>
+          </div>
+          <div class="container__hide__responsive">
+            <div class="popular__tags__container"></div>
+          </div>
+          <div class="label__popular__authors">
+            <span>
+              인기 작가 &#183; 가수
+            </span>
+            <span class="material-icons-outlined expand">
+              expand_more
+            </span>
+          </div>
+          <div class="container__hide__responsive">
+            <div class="popular__authors__container"></div>
+          </div>
         </div>
         
         <!-- 글마디 리스트 컨테이너 -->

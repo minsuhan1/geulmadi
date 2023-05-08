@@ -10,7 +10,15 @@ html {
 }
 
 .container {
-  width: 120rem;
+  padding: 0 10rem;
   margin: 0 auto;
   // width: 120rem;
+
+  @include laptop {
+    padding: 0 5rem;
+  }
+
+  @include tablet {
+    padding: 0 1rem;
+  }
 }

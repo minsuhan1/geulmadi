@@ -4,27 +4,61 @@
   justify-content: center;
   align-items: center;
   margin: auto;
+
+  // 카드 스케일과 함께 wrapper 가로세로 길이도 줄여야 중앙정렬이 유지됨
+  @media (max-width: 600px) {
+    width: 1vw;
+    height: 1vw;
+  }
 }
 
 .card {
   box-shadow: 20px 50px 100px rgba(0, 0, 0, 0.5);
 
+  // 화면크기가 작아질수록 scale 축소 (내부 요소 비율 유지)
+  @media (max-width: 600px) {
+    transform: scale(0.95);
+  }
+  @media (max-width: 480px) {
+    transform: scale(0.85);
+  }
+  @media (max-width: 440px) {
+    transform: scale(0.8);
+  }
+  @media (max-width: 400px) {
+    transform: scale(0.75);
+  }
+  @media (max-width: 350px) {
+    transform: scale(0.7);
+  }
+
   .content {
+    font-size: 1rem;
     display: flex;
     justify-content: center;
     position: relative;
     width: 35rem;
     height: 35rem;
     padding: 5rem;
-
     color: #f2f2f2;
     background: linear-gradient(135deg, #e2a9e5 15%, #2b94e5 100%);
     // transition: all 0.5s ease-in;
 
+    // @include tablet {
+    //   width: 65vw;
+    //   height: 65vw;
+    // }
+
+    // @include phone {
+    //   width: 65vw;
+    //   height: 65vw;
+    //   font-size: 0.9rem;
+    // }
+
     p {
       text-align: center;
       margin: auto 0;
-      font-size: 1.6rem;
+      font-size: 1.6em;
       position: relative;
       // workd-break : 아시아, 비아시아 언어의 줄 바꿈을 모두 제어
       // keep-all : 단어 기준으로 줄 바꿈
@@ -51,7 +85,7 @@
     }
 
     h2 {
-      font-size: 1.6rem;
+      font-size: 1.6em;
       position: absolute;
       bottom: 4rem;
       right: 4rem;
