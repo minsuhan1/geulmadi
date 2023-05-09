@@ -38,6 +38,7 @@
     border-radius: 2px;
 
     &:focus {
+      -webkit-box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       border-color: #aea176;
       outline: 0px;
@@ -164,6 +165,7 @@
 
   textarea {
     &:focus {
+      -webkit-box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       border-color: #aea176;
       outline: 0px;

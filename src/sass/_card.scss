@@ -13,6 +13,7 @@
 }
 
 .card {
+  -webkit-box-shadow: 20px 50px 100px rgba(0, 0, 0, 0.5);
   box-shadow: 20px 50px 100px rgba(0, 0, 0, 0.5);
 
   // 화면크기가 작아질수록 scale 축소 (내부 요소 비율 유지)

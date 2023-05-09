@@ -79,6 +79,7 @@
     resize: none;
 
     &:focus {
+      -webkit-box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       border-color: #b9ad99;
       outline: 0px;
@@ -91,6 +92,7 @@
     color: #aea176;
 
     &:focus {
+      -webkit-box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       box-shadow: 0 0 4px rgb(185 173 153 / 50%);
       border-color: #b9ad99;
       outline: 0px;
@@ -197,6 +199,7 @@
     background-color: #fff;
     position: fixed;
     top: 0px;
+    -webkit-box-shadow: 0px 5px 10px -10px #222;
     box-shadow: 0px 5px 10px -10px #222;
     z-index: 3;
   }
@@ -327,6 +330,7 @@ blockquote {
     transform: scale(1.007);
     transition: all 0.2s linear;
     cursor: pointer;
+    -webkit-box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
     box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
   }
 
