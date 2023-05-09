@@ -41,6 +41,51 @@ class PostListView extends View {
     );
   }
 
+  #stickyFilter(entries) {
+    // 목록 컨테이너 가로길이
+    const postContainerWidth = this.#container.getBoundingClientRect().width;
+    // 필터 컨테이너 세로길이
+    const filterHeight = this.#filters_container.getBoundingClientRect().height;
+
+    // Entry object
+    const [entry] = entries;
+    console.log(entry);
+
+    // 뷰포트에서 popular_container 요소가 사라지기 시작하는 시점에 필터를 고정
+    if (!entry.isIntersecting) {
+      console.log('container disappeared');
+      this.#filters_container.classList.add('sticky');
+      this.#filters_container.style.width = `${postContainerWidth}px`;
+      // 필터 컨테이너가 차지하던 height만큼 목록 컨테이너를 아래로 내려야 자연스러움
+      this.#container.style.marginTop = `${filterHeight}px`;
+    }
+    // 뷰포트에서 popular_container 요소가 다시 나타나기 시작하는 시점에 필터 고정 해제
+    else {
+      console.log('container appeared');
+      this.#filters_container.classList.remove('sticky');
+      this.#container.style.marginTop = `0px`;
+    }
+  }
+
+  #addPopCotnainerObserver() {
+    // 필터 높이
+
+    const popContainerObserver = new IntersectionObserver(
+      this.#stickyFilter.bind(this),
+      {
+        root: null, // 전체 뷰포트
+        threshold: 0,
+        // 루트 요소(뷰포트) 의 margin 설정
+        // 필터 높이만큼 남긴 시점에서 observer가 trigger됨
+        // rootMargin: `${filterHeight}px`,/
+      }
+    );
+
+    // popular_container를 observe
+    const popular_container = document.querySelector('.popular__container');
+    popContainerObserver.observe(popular_container);
+  }
+
   /**
    * @description 필터가 선택되거나 페이지가 새로고침될 때 controller가 등록한 handler 실행
    * @param { Function } handler : 주어진 필터에 해당하는 글마디 리스트 로드하는 핸들러
@@ -207,6 +252,8 @@ class PostListView extends View {
 
     // 글마디 리스트 컴포넌트에 추가
     this.#container.insertAdjacentHTML('afterbegin', markup);
+    // 필터 intersectionObserver 추가
+    this.#addPopCotnainerObserver();
   }
 
   /**

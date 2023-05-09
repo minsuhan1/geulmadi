@@ -20,8 +20,9 @@ export default class View {
   }
 
   /* 안내 메시지 표시 */
-  renderInfoMessage(message) {
+  renderInfoMessage(message, title = null) {
     Swal.fire({
+      title: title,
       text: message,
       icon: 'info',
       timer: 2000,

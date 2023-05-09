@@ -122,7 +122,10 @@ class LoginView extends View {
   /* nav 프로필 버튼 보이기 */
   showNavAccountButton(tooltipText) {
     this.#btnAccount.classList.remove('hidden');
-    document.querySelector('.account__text').textContent = `${tooltipText}`;
+
+    this.#btnAccount.addEventListener('click', () => {
+      this.renderInfoMessage(tooltipText, '로그인 정보');
+    });
   }
   /* nav 로그인/로그아웃 버튼 모두 제거 (초기화용) */
   clearHeaderButtons() {

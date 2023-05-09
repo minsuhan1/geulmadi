@@ -22,7 +22,7 @@ class CardView extends View {
       // 수정/삭제 버튼 클릭한 경우 return
       if (e.target.closest('.icons')) return;
 
-      // 클릭한 글마디 요소소
+      // 클릭한 글마디 요소
       const post = e.target.closest('.blockquote__list__child');
 
       if (post) {
