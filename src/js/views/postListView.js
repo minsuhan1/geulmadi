@@ -41,6 +41,10 @@ class PostListView extends View {
     );
   }
 
+  /**
+   * @description IntersectionObserver 콜백함수
+   * @param { object } entries
+   */
   #stickyFilter(entries) {
     // 목록 컨테이너 가로길이
     const postContainerWidth = this.#container.getBoundingClientRect().width;
@@ -67,17 +71,16 @@ class PostListView extends View {
     }
   }
 
+  /**
+   * @description 모바일에서 sticky filter를 구현하기 위한 popular_container IntersectionObserver 등록
+   * @param { object } entries
+   */
   #addPopCotnainerObserver() {
-    // 필터 높이
-
     const popContainerObserver = new IntersectionObserver(
       this.#stickyFilter.bind(this),
       {
         root: null, // 전체 뷰포트
         threshold: 0,
-        // 루트 요소(뷰포트) 의 margin 설정
-        // 필터 높이만큼 남긴 시점에서 observer가 trigger됨
-        // rootMargin: `${filterHeight}px`,/
       }
     );
 
