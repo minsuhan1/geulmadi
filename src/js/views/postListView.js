@@ -53,11 +53,9 @@ class PostListView extends View {
 
     // Entry object
     const [entry] = entries;
-    console.log(entry);
 
     // 뷰포트에서 popular_container 요소가 사라지기 시작하는 시점에 필터를 고정
     if (!entry.isIntersecting) {
-      console.log('container disappeared');
       this.#filters_container.classList.add('sticky');
       this.#filters_container.style.width = `${postContainerWidth}px`;
       // 필터 컨테이너가 차지하던 height만큼 목록 컨테이너를 아래로 내려야 자연스러움
@@ -65,7 +63,6 @@ class PostListView extends View {
     }
     // 뷰포트에서 popular_container 요소가 다시 나타나기 시작하는 시점에 필터 고정 해제
     else {
-      console.log('container appeared');
       this.#filters_container.classList.remove('sticky');
       this.#container.style.marginTop = `0px`;
     }

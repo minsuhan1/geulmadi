@@ -147,7 +147,6 @@ const controlSignOut = async function () {
     await auth.signOutUser();
     loginView.renderSuccessMessage("로그아웃되었습니다");
   } catch (err) {
-    console.log(err);
     loginView.renderError("로그아웃 실패");
   }
 };
@@ -157,7 +156,6 @@ const controlSignOut = async function () {
  * @description 로그인 상태 변경 감지 후 유저id, 토큰 등을 받고 헤더 렌더링
  */
 const controlUserStateChange = async function (user) {
-  console.log("user data: ", user);
   if (user) {
     uid = user.uid;
     token = await user.getIdToken();

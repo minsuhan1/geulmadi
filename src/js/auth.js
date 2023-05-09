@@ -65,7 +65,6 @@ class Auth {
         email,
         password
       );
-      console.log(data);
       return data;
     } catch (err) {
       throw err;
@@ -87,7 +86,6 @@ class Auth {
         email,
         password
       );
-      console.log(data);
       return data;
     } catch (err) {
       throw err;
