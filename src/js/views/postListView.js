@@ -48,7 +48,7 @@ class PostListView extends View {
   #stickyFilter(entries) {
     // 목록 컨테이너 가로길이
     const postContainerWidth = this.#container.getBoundingClientRect().width;
-    // 필터 컨테이너 세로길이
+    // 필터 컨테이너(카테고리 바) 세로길이
     const filterHeight = this.#filters_container.getBoundingClientRect().height;
 
     // Entry object
@@ -57,6 +57,7 @@ class PostListView extends View {
     // 뷰포트에서 popular_container 요소가 사라지기 시작하는 시점에 필터를 고정
     if (!entry.isIntersecting) {
       this.#filters_container.classList.add('sticky');
+      // flex 컨테이너 안에 있던 필터 컨테이너가 독립하면서 stretch 적용이 풀리기 때문에 현재 글마디 목록 컨테이너 가로길이만큼 width 지정
       this.#filters_container.style.width = `${postContainerWidth}px`;
       // 필터 컨테이너가 차지하던 height만큼 목록 컨테이너를 아래로 내려야 자연스러움
       this.#container.style.marginTop = `${filterHeight}px`;
