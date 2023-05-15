@@ -2,21 +2,6 @@
 .hero {
   margin-top: 50px;
   align-items: center;
-
-  &__cards__container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 50px;
-  }
-
-  &__card {
-    width: 38rem;
-    height: 45rem;
-    background-color: rgb(192, 192, 192);
-    border-radius: 1.5%;
-    -webkit-box-shadow: 0px 15px 30px -15px rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 15px 30px -15px rgba(0, 0, 0, 0.3);
-  }
 }
 
 .hero__text__box {
@@ -64,16 +49,4 @@
 .heading__description {
   text-align: center;
   line-height: 1.8rem;
-}
-
-.link__goto__collection__page {
-  text-align: center;
-  font-size: 2rem;
-  margin: 20px auto;
-}
-
-.link__goto__collection__page a {
-  text-decoration: underline;
-  text-underline-offset: 5px;
-  color: inherit;
 }

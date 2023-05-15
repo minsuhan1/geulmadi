@@ -49,23 +49,21 @@ const controlUpload = async function (formData) {
  */
 export const controlLoadPosts = async function (hash) {
   try {
-    // 현재 글마디 리스트 컨테이너 초기화
+    // 현재 글마디 리스트 컨테이너 초기화 및 스피너 표시
     postListView.clearList();
-
-    // 글마디 데이터 불러오기 (MODEL)
     postListView.toggleSpinner();
 
-    // 유저가 좋아요한 글마디
+    // 유저가 좋아요한 글마디 불러오기
     const userFavorites = await model.loadUserFavorites(uid);
 
-    // 인기태그,작가 로드 프로미스
+    // 인기태그,작가 로드 프로미스 생성
     const promise_poptags = model.loadPopularTags();
     const promise_popAuthors = model.loadPopularAuthors();
 
+    // 글마디 로드 프로미스, 글마디 데이터, 인기태그 데이터, 인기작가 데이터
     let promise_load, data, popTags, popAuthors;
+
     if ((hash === "#recent") | !hash) {
-      // data = await model.loadPost("recent");
-      // model.loadPopularTags();
       promise_load = model.loadPost("recent");
     }
     if (hash === "#trending") {
@@ -107,7 +105,6 @@ export const controlLoadPosts = async function (hash) {
 
     // 글마디 렌더링 (VIEW)
     if (data?.length > 0) {
-      // 글마디
       postListView.render(data, userFavorites, uid);
       postListView.toggleSpinner();
     } else {
@@ -133,7 +130,7 @@ const controlDelete = async function (postId) {
     try {
       // 글마디 삭제 요청
       await model.deletePost(postId, token);
-      // 최근 글마디 reload
+      // reload
       await controlLoadPosts(location.hash);
     } catch (err) {
       postListView.renderError(err);

@@ -45,7 +45,6 @@ const convertErrorCodeToMessage = function (errCode) {
 /**
  * @param { Array } formData registerView가 제공하는 form data
  * @description 회원가입 폼으로부터 입력받은 데이터를 auth.js에 정의된 Firebase 기반 회원가입 함수에 전달하여 회원가입을 진행함
- *
  */
 const controlCreateAccount = async function (formData) {
   try {
@@ -68,10 +67,8 @@ const controlCreateAccount = async function (formData) {
 };
 
 /**
- *
  * @param { Array } formData loginView가 제공하는 form data
  * @description 로그인 폼으로부터 입력받은 데이터를 auth.js에 정의된 Firebase 기반 로그인 함수에 전달하여 로그인을 진행함
- *
  */
 const controlSignIn = async function (formData) {
   try {
@@ -95,12 +92,9 @@ const controlSignIn = async function (formData) {
 };
 
 /**
- *
- * @param { Array } formData loginView가 제공하는 form data
- * @description 로그인 폼으로부터 입력받은 데이터를 auth.js에 정의된 Firebase 기반 로그인 함수에 전달하여 로그인을 진행함
- *
+ * @description Google로 로그인
  */
-const controlSignInWithGoogle = async function (formData) {
+const controlSignInWithGoogle = async function () {
   try {
     const data = await auth.signInGoogle();
     // 인증 완료 메시지 표시
@@ -114,10 +108,8 @@ const controlSignInWithGoogle = async function (formData) {
 };
 
 /**
- *
  * @param { string } email resetPasswordView가 제공하는 email
  * @description 주어진 email을 auth.js에 정의된 Firebase 기반 비밀번호 재설정 함수에 전달
- *
  */
 const controlResetPassword = async function (email) {
   try {

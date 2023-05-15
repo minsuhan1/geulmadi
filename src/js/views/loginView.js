@@ -33,18 +33,21 @@ class LoginView extends View {
     this.#modal.classList.toggle('fadein');
   }
 
+  // 회원가입 모달 표시
   #showRegisterModal() {
     this.#toggleModal();
     this.#modalRegister.classList.toggle('hidden');
     this.#modalRegister.classList.toggle('fadein');
   }
 
+  // 비밀번호 재설정 모달 표시
   #showResetPswModal() {
     this.#toggleModal();
     this.#modalResetPsw.classList.toggle('hidden');
     this.#modalResetPsw.classList.toggle('fadein');
   }
 
+  // 로그인 모달 표시/제거
   #addHandlerShowModal() {
     this.#btnLogin.addEventListener('click', this.#toggleModal.bind(this));
     this.#btnModalClose.addEventListener('click', this.#toggleModal.bind(this));
@@ -56,6 +59,7 @@ class LoginView extends View {
     });
   }
 
+  // 회원가입 버튼 클릭 이벤트 핸들러 등록
   #addHandlerShowRegisterModal() {
     this.#btnGotoRegister.addEventListener(
       'click',
@@ -63,6 +67,7 @@ class LoginView extends View {
     );
   }
 
+  // 비밀번호 재설정 버튼 클릭 이벤트 핸들러 등록
   #addHandlerShowResetPswModal() {
     this.#btnGotoResetPsw.addEventListener(
       'click',

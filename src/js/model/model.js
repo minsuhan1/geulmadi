@@ -185,15 +185,6 @@ export const saveLike = async function (postId, uid, type, token) {
         "PATCH",
         `{"${postId}": { "time": "${new Date().getTime()}" }}`
       );
-
-      // 좋아요 개수 업데이트
-      const likesNum = await AJAX(
-        `${API_URL_POSTS}/${postId}/likesNum.json`,
-        "GET"
-      );
-      await AJAX(`${API_URL_POSTS}/${postId}.json?auth=${token}`, "PATCH", {
-        likesNum: +likesNum + 1,
-      });
     }
 
     // 좋아요 취소
@@ -203,16 +194,16 @@ export const saveLike = async function (postId, uid, type, token) {
         `${API_URL_LIKES}/${uid}/favorites/${postId}.json?auth=${token}`,
         "DELETE"
       );
-
-      // 좋아요 개수 업데이트
-      const likesNum = await AJAX(
-        `${API_URL_POSTS}/${postId}/likesNum.json`,
-        "GET"
-      );
-      await AJAX(`${API_URL_POSTS}/${postId}.json?auth=${token}`, "PATCH", {
-        likesNum: +likesNum - 1,
-      });
     }
+
+    // 좋아요 개수 업데이트
+    const likesNum = await AJAX(
+      `${API_URL_POSTS}/${postId}/likesNum.json`,
+      "GET"
+    );
+    await AJAX(`${API_URL_POSTS}/${postId}.json?auth=${token}`, "PATCH", {
+      likesNum: +likesNum + (type === "on" ? 1 : -1),
+    });
   } catch (err) {
     throw err;
   }
