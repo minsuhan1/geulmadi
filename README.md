@@ -129,7 +129,7 @@
 - `hashchange` 이벤트 리스너를 활용한 카테고리(최신/인기/내 글마디/좋아요) 기능
 - 상위 20개 인기 태그, 인기 작가/가수 표시 기능
 - 키워드/분류 기반 검색 기능
-- `html-to-image`, `download` 라이브러리를 활용한 글마디 카드 PNG 다운로드 기능
+- `html-to-image`, `downloadjs` 라이브러리를 활용한 글마디 카드 PNG 다운로드 기능
 - `Web Share API` 및 `blob`을 활용한 글마디 카드 외부 공유 기능
 - 모바일 반응형 UI 구현 (`mediaQuery`, `@mixin`, `IntersectionObserver API`)
 
@@ -400,7 +400,7 @@ export const AJAX = async function (url, type, uploadData = undefined) {
 
 - hashchange 이벤트를 `postListView.js`에서 감지한 다음, 바뀐 hash 값을 `postController.js`가 등록한 handler에 전달합니다. `postController.js`는 `hash`값에 따라 `model.js`에게 해당 카테고리에 맞게 글마디들을 가공해서 달라고 요청한 다음, 결과를 받아 `postListView.js`의 render 메서드에 전달하여 렌더링을 하게 합니다.
 
-- 검색 기능 역시 비슷하게 구현했습니다. 유저가 글마디 본문, 제목, 작가, 태그 중 선택한 검색 기준과, 키워드를 가지고 주소의 hash 값을 `#search?type={$기준}&key={$키워드}` 변경하면, `postController.js`가 hash값에서 검색기준과 키워드를 추출하여 `model.js`의 `loadSearchResults` 메서드를 호출하여 조건에 맞는 글마디를 검색해달라고 요청합니다.
+- 검색 기능 역시 비슷하게 구현했습니다. 유저가 글마디 본문, 제목, 작가, 태그 중 선택한 검색 기준과, 키워드를 가지고 주소의 hash 값을 `#search?type={$기준}&key={$키워드}`로 변경하면, `postController.js`가 hash값에서 검색기준과 키워드를 추출하여 `model.js`의 `loadSearchResults` 메서드를 호출하여 조건에 맞는 글마디를 검색해달라고 요청합니다.
 
 ```js
 > postListView.js
