@@ -14,7 +14,7 @@
 ### ▪️ 프로젝트 개요
 
 - [글마디 웹사이트 바로가기](https://geulmadi.netlify.app/)
-- [프로젝트 회고 (미완)](링크)
+- [프로젝트 회고](https://velog.io/@minsuhan1/Toy-Project-%EA%B8%80%EB%A7%88%EB%94%94#%EF%B8%8F-%ED%9B%84%EA%B8%B0)
 
 ### ▪️ 기술 스택
 
