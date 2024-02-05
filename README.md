@@ -1,13 +1,14 @@
 # ✍️ Toy Project : 글마디
 
-### ▪️ 프로젝트 소개
-
+## ✨ 프로젝트 소개
 > '글마디'는 책이나 노래에서 발견한 인상적인 문구나 가사를 기록하고, 서로 공유하는 웹서비스입니다. <br><br>
 > 책을 읽거나 노래를 듣다가 감명깊은 구절을 발견했나요? <br>
 > 마음에만 담아두다 잊혀질까 아쉬운 구절을 기록해보세요 <br>
 > 그리고 주변의 소중한 사람들에게 예쁜 사진으로도 공유해보세요 <br>
 
-### ▪️ 제작 동기
+<br>
+
+## 💡 제작 동기
 
 - HTML, CSS, ES6 자바스크립트를 순서대로 공부하고 나서, 또 다른 이론적인 무언가를 배우는 것 보다는 프로젝트를 하나 진행해봐야겠다는 생각이 들었습니다.
 
@@ -15,59 +16,36 @@
 
 - 라이브러리나 프레임워크를 최대한 사용하지 않고 CSS, JS에서 제공하는 기능들을 활용하여 제작하는 것을 목표로 했습니다. 특히 CSS Flexbox, 자바스크립트의 ES6 Class, Array/Object API, DOM API, 함수형 프로그래밍, 비동기 프로그래밍 등의 적극적인 활용을 추구했습니다.
 
-### ▪️ 프로젝트 기간
+<br>
 
-- 2023.04.05 ~ 2023. 05. 09
+## 🗓️ 프로젝트 기간
 
-### ▪️ 프로젝트 개요
+2023.04.05 ~ 2023. 05. 09
+
+<br>
+
+## 📌 프로젝트 개요
 
 - [글마디 웹사이트 바로가기](https://geulmadi.netlify.app/)
 - [프로젝트 회고](https://velog.io/@minsuhan1/Toy-Project-%EA%B8%80%EB%A7%88%EB%94%94#%EF%B8%8F-%ED%9B%84%EA%B8%B0)
 
-### ▪️ 기술 스택
+<br>
 
-- JavaScript (ES6) / SASS (SCSS) / HTML
-- Firebase (Realtime Database, Authentication)
-- MVC Architecture
+## 🛠️ 기술 스택
+#### FE
+<img src="https://img.shields.io/badge/HTML-000000?style=flat-square&logo=html5&logoColor=E34F26"/> <img src="https://img.shields.io/badge/Scss-000000?style=flat-square&logo=sass&logoColor=CC6699"/> <img src="https://img.shields.io/badge/Javascript-000000?style=flat-square&logo=javascript&logoColor=F7DF1E"/>
 
-### ▪️ package.json
+#### BE
+<img src="https://img.shields.io/badge/Firebase Auth-000000?style=flat-square&logo=firebase&logoColor=FFCA28"/> <img src="https://img.shields.io/badge/Firebase Realtime Database-000000?style=flat-square&logo=firebase&logoColor=FFCA28"/>
 
-```json
-{
-  "name": "geulmadi",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html"
-  },
-  "keywords": [],
-  "author": "Minsu Han",
-  "license": "ISC",
-  "devDependencies": {
-    "@parcel/transformer-sass": "^2.8.3",
-    "dotenv": "^16.0.3",
-    "downloadjs": "^1.4.7",
-    "firebase": "^9.19.1",
-    "html-to-image": "^1.11.11",
-    "localtunnel": "^2.0.2",
-    "parcel-bundler": "^1.12.5",
-    "parcel-plugin-static-files-copy": "^2.6.0",
-    "regenerator-runtime": "^0.13.11",
-    "sass": "^1.61.0",
-    "sweetalert2": "^11.7.3"
-  },
-  "staticFiles": {
-    "staticPath": "static"
-  }
-}
-```
+#### Pattern
+<img src="https://img.shields.io/badge/MVC-000000?style=flat-square&logo=mvc&logoColor=FFCA28"/>
 
-### ▪️ 개발 환경
+<br>
+
+## 🛠️ 개발 환경
 
 - 계획 및 일정관리 ➡️ [Notion](https://accurate-bank-c77.notion.site/cfce9924c3e44aa8ad5935acf35c21ea)
-
-  ![image](https://github.com/minsuhan1/JavaScript_course_2022/assets/50696567/e66b75bf-c697-4c25-893f-5a25651f613a)
 
 - IDE ➡️ Visual Studio Code
 
@@ -75,7 +53,14 @@
 
 - 와이어프레임 제작 ➡️ [Figma](https://www.figma.com/file/6yNejRcsjim7nQ3jw2myPt/%EA%B8%80%EB%A7%88%EB%94%94?type=design&node-id=0-1&t=UzksdTBY8k87O6Wx-0)
 
-### ▪️ 디렉터리 구조
+<br>
+
+## 🗺️ 시스템 구성도
+<img width="734" alt="image" src="https://github.com/minsuhan1/geulmadi/assets/50696567/60f4c1a7-1efc-4c10-aafc-9de9c272a938">
+
+<br>
+
+## 📂 디렉터리 구조
 
 ```bash
 📦
@@ -129,7 +114,7 @@
 
 <br />
 
-### ▪️ 구현한 기능
+## ✨ 구현한 기능
 
 - `Firebase Authentication`을 활용한 회원가입/로그인 인증
 - `.env` 파일을 통한 API KEY 보안 관리 (`dotenv`)
@@ -143,7 +128,7 @@
 
 <br />
 
-### ▪️ 구현 기능 요약
+## ✨ 구현 기능 요약
 
 #### ① Firebase Authentication 기반 계정생성/로그인
 
