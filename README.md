@@ -45,7 +45,7 @@
 
 ## 🛠️ 개발 환경
 
-- 계획 및 일정관리 ➡️ [Notion](https://minsuhan.notion.site/cfce9924c3e44aa8ad5935acf35c21ea?pvs=73)
+- 계획 및 일정관리 ➡️ [Notion](https://minsuhan.notion.site/cfce9924c3e44aa8ad5935acf35c21ea?pvs=4)
 
 - IDE ➡️ Visual Studio Code
 
