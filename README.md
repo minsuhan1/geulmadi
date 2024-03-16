@@ -45,7 +45,7 @@
 
 ## 🛠️ 개발 환경
 
-- 계획 및 일정관리 ➡️ [Notion](https://accurate-bank-c77.notion.site/cfce9924c3e44aa8ad5935acf35c21ea)
+- 계획 및 일정관리 ➡️ [Notion](https://minsuhan.notion.site/cfce9924c3e44aa8ad5935acf35c21ea?pvs=73)
 
 - IDE ➡️ Visual Studio Code
 
